@@ -5,17 +5,20 @@
   
   <title>State Machine Construction Kit for F# | Red, Green, Rewrite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Once upon the time I needed to implement state machine. To not reinvent the wheel I reviewed what’s available: Windows Workflow Foundation, Appccelerate.StateMachine, bbv.Common.StateMachine, Stateles">
+  <meta name="description" content="NOTE: There is a lot of code in this article, as it is repeated and iteratively added. The final version is just 28 lines near the end, but I think you should read the whole thing anyway.
+Once upon th">
 <meta property="og:type" content="article">
 <meta property="og:title" content="State Machine Construction Kit for F#">
 <meta property="og:url" content="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/index.html">
 <meta property="og:site_name" content="Red, Green, Rewrite">
-<meta property="og:description" content="Once upon the time I needed to implement state machine. To not reinvent the wheel I reviewed what’s available: Windows Workflow Foundation, Appccelerate.StateMachine, bbv.Common.StateMachine, Stateles">
+<meta property="og:description" content="NOTE: There is a lot of code in this article, as it is repeated and iteratively added. The final version is just 28 lines near the end, but I think you should read the whole thing anyway.
+Once upon th">
 <meta property="og:image" content="https://github.com/MiloszKrajewski/stateful4k/raw/master/doc/basic-door-machine.png">
-<meta property="og:updated_time" content="2016-06-26T23:54:46.288Z">
+<meta property="og:updated_time" content="2016-06-27T00:07:40.575Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="State Machine Construction Kit for F#">
-<meta name="twitter:description" content="Once upon the time I needed to implement state machine. To not reinvent the wheel I reviewed what’s available: Windows Workflow Foundation, Appccelerate.StateMachine, bbv.Common.StateMachine, Stateles">
+<meta name="twitter:description" content="NOTE: There is a lot of code in this article, as it is repeated and iteratively added. The final version is just 28 lines near the end, but I think you should read the whole thing anyway.
+Once upon th">
 <meta name="twitter:image" content="https://github.com/MiloszKrajewski/stateful4k/raw/master/doc/basic-door-machine.png">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
@@ -58,9 +61,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
@@ -91,7 +94,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Once upon the time I needed to implement state machine. To not reinvent the wheel I reviewed what’s available: <a href="http://msdn.microsoft.com/en-gb/vstudio/jj684582.aspx" target="_blank" rel="external">Windows Workflow Foundation</a>, <a href="https://github.com/appccelerate/statemachine" target="_blank" rel="external">Appccelerate.StateMachine</a>, <a href="https://code.google.com/p/bbvcommon/wiki/StateMachineTutorial" target="_blank" rel="external">bbv.Common.StateMachine</a>, <a href="https://github.com/nblumhardt/stateless" target="_blank" rel="external">Stateless</a>, <a href="http://simplestatemachine.codeplex.com" target="_blank" rel="external">SimpleStateMachine</a>, <a href="https://code.google.com/p/solid-state" target="_blank" rel="external">Solid.State</a>, and <a href="https://github.com/OmerMor/StateMachineToolkit/tree/master/src/StateMachineToolkit" target="_blank" rel="external">StateMachineToolkit</a>. Windows Workflow Foundation was just scary, apart from the fact that State Machine is not available in .NET 4.0. It didn’t look lightweight either.</p>
+        <p><strong>NOTE</strong>: There is a lot of code in this article, as it is repeated and iteratively added. The final version is just 28 lines near the end, but I think you should read the whole thing anyway.</p>
+<p>Once upon the time I needed to implement state machine. To not reinvent the wheel I reviewed what’s available: <a href="http://msdn.microsoft.com/en-gb/vstudio/jj684582.aspx" target="_blank" rel="external">Windows Workflow Foundation</a>, <a href="https://github.com/appccelerate/statemachine" target="_blank" rel="external">Appccelerate.StateMachine</a>, <a href="https://code.google.com/p/bbvcommon/wiki/StateMachineTutorial" target="_blank" rel="external">bbv.Common.StateMachine</a>, <a href="https://github.com/nblumhardt/stateless" target="_blank" rel="external">Stateless</a>, <a href="http://simplestatemachine.codeplex.com" target="_blank" rel="external">SimpleStateMachine</a>, <a href="https://code.google.com/p/solid-state" target="_blank" rel="external">Solid.State</a>, and <a href="https://github.com/OmerMor/StateMachineToolkit/tree/master/src/StateMachineToolkit" target="_blank" rel="external">StateMachineToolkit</a>. Windows Workflow Foundation was just scary, apart from the fact that State Machine is not available in .NET 4.0. It didn’t look lightweight either.</p>
 <p>None of the others satisfied my requirements either:</p>
 <ul>
 <li><strong>Events should be able to carry data</strong> - for example, hypothetical event <code>KeyPressed</code> should also carry information which key has been actually pressed;</li>
@@ -144,9 +148,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/" data-id="cipx98q040001hwjbr6boeecs" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/" data-id="cipx9mnto0001l8jb8uh8j783" class="article-share-link">Partager</a>
       
-        <a href="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/#disqus_thread" class="article-comment-link">Commentaires</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/f/">f#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/state-machine/">state-machine</a></li></ul>
@@ -159,7 +163,7 @@
   
   
     <a href="/2016/05/17/A-perfect-square-kata/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title">A perfect square kata</div>
     </a>
   
@@ -183,7 +187,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/f/">f#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li></ul>
     </div>
@@ -193,7 +197,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/c/" style="font-size: 10px;">c#</a> <a href="/tags/f/" style="font-size: 10px;">f#</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a>
     </div>
@@ -212,7 +216,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -237,7 +241,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 Milosz Krajewski<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
