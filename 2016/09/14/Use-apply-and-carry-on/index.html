@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Use apply and carry on | Red, Green, Rewrite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="One of everyone’s favourite features of F# is pipe (|&amp;gt;) operator. It allows to pipe output of one function as input to another function preserving visual honesty. The general idea is that, in Engli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Use apply and carry on">
+<meta property="og:url" content="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/index.html">
+<meta property="og:site_name" content="Red, Green, Rewrite">
+<meta property="og:description" content="One of everyone’s favourite features of F# is pipe (|&amp;gt;) operator. It allows to pipe output of one function as input to another function preserving visual honesty. The general idea is that, in Engli">
+<meta property="og:image" content="http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/visual_dishonesty.png">
+<meta property="og:updated_time" content="2016-09-14T17:20:38.636Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Use apply and carry on">
+<meta name="twitter:description" content="One of everyone’s favourite features of F# is pipe (|&amp;gt;) operator. It allows to pipe output of one function as input to another function preserving visual honesty. The general idea is that, in Engli">
+<meta name="twitter:image" content="http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/visual_dishonesty.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Red, Green, Rewrite</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">the tales about software development</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Use-apply-and-carry-on" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/Use-apply-and-carry-on/" class="article-date">
+  <time datetime="2016-09-14T17:47:16.000Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Use apply and carry on
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>One of everyone’s favourite features of F# is pipe (<code>|&gt;</code>) operator. It allows to pipe output of one function as input to another function preserving <a href="http://theburningmonk.com/2014/12/being-visually-honest-with-f/" target="_blank" rel="external">visual honesty</a>. The general idea is that, in English, we read <em>left-to-right</em> and <em>top-down</em>. In C# (C, C++, Java, Pascal, Python) we read in all possible directions, most likely <em>top-down</em> for overall structure but <em>botton-up</em> and <em>right-to-left</em> for single statements.</p>
+<p><img src="http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/visual_dishonesty.png" alt="Visual honesty"></p>
+<p>For example:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> y = Math.Round(Math.Exp(Math.Sin(x*<span class="number">5.2</span> + <span class="number">7.1</span>)));</span><br></pre></td></tr></table></figure>
+<p>starts at the <em>right</em> end going <em>left-to-right</em> for a moment (<code>x*5.2 + 7.1</code>) but then turns <em>right-to-left</em> with <code>Math.Sin</code>, <code>Math.Exp</code> and finally <code>Math.Round</code> (in this order). In F# the pipe operator (<code>|&gt;</code>) allows to write code exactly in the same order as it is going to be executed:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> y = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin |&gt; Math.Exp |&gt; Math.Round</span><br></pre></td></tr></table></figure>
+<p>Around the world, many hours have been spent arranging function arguments (guilty!) to allow such seamless experience. But sometimes, the universe is against us. Let’s assume we would like to print out the value after <code>Math.Sin</code>. The conservative approach would be quite intrusive - we would need to break expression in half:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> temp = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin </span><br><span class="line">printf <span class="string">"%g"</span> temp</span><br><span class="line"><span class="keyword">let</span> y = temp |&gt; Math.Exp |&gt; Math.Round</span><br></pre></td></tr></table></figure>
+<p>Whoa! That is intrusive. </p>
+<p>But here comes the rescue. The <code>apply</code> function implemented as:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> apply func arg = func arg; arg</span><br></pre></td></tr></table></figure>
+<p>The function itself is trivial, it takes a function and an argument, executes given function with given argument but then returns it, so the argument goes through the function: </p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> y = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin |&gt; apply (printf <span class="string">"%g"</span>) |&gt; Math.Exp |&gt; Math.Round</span><br></pre></td></tr></table></figure>
+<p>In the example above, the function (<code>printf &quot;%g&quot;</code>) has been <em>applied</em> to a value passed between <code>Math.Sin</code> and <code>Math.Exp</code> but did not require any temporary variables or breaking the flow.</p>
+<p>So, <strong>use apply and carry on</strong>!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/" data-id="cit35494n0002fwjwq6drf69i" class="article-share-link">Share</a>
+      
+        <a href="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/F/">F#</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/14/Maze-generator-with-Fable/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Maze generator with Fable
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/27/State-Machine-Construction-Kit-for-F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">State Machine Construction Kit for F#</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/F/">F#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/f/">f#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/F/" style="font-size: 10px;">F#</a> <a href="/tags/c/" style="font-size: 10px;">c#</a> <a href="/tags/f/" style="font-size: 20px;">f#</a> <a href="/tags/fable/" style="font-size: 10px;">fable</a> <a href="/tags/graph/" style="font-size: 10px;">graph</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/09/14/Maze-generator-with-Fable/">Maze generator with Fable</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/Use-apply-and-carry-on/">Use apply and carry on</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/27/State-Machine-Construction-Kit-for-F/">State Machine Construction Kit for F#</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/17/A-perfect-square-kata/">A perfect square kata</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Milosz Krajewski<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'red-green-rewrite';
+  
+  var disqus_url = 'http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
