@@ -6,29 +6,32 @@
   <title>Maze generator with Fable | Red, Green, Rewrite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Quick links
+Follow up
 Source code
 Online demo
 
-Redgate’s first ever coding challengeFor quite some time I was looking for excuse to use Fable. Fable is F# to JavaScript compiler. I generally shy away from JavaS">
+Redgate’s first ever coding challengeFor quite some time I was looking for excuse to use Fable. Fable is F# to JavaScript compiler. I generally shy away">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maze generator with Fable">
 <meta property="og:url" content="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/index.html">
 <meta property="og:site_name" content="Red, Green, Rewrite">
 <meta property="og:description" content="Quick links
+Follow up
 Source code
 Online demo
 
-Redgate’s first ever coding challengeFor quite some time I was looking for excuse to use Fable. Fable is F# to JavaScript compiler. I generally shy away from JavaS">
+Redgate’s first ever coding challengeFor quite some time I was looking for excuse to use Fable. Fable is F# to JavaScript compiler. I generally shy away">
 <meta property="og:image" content="http://red-green-rewrite.github.io/images/daedalus/maze-100x100.png">
 <meta property="og:image" content="http://red-green-rewrite.github.io/images/daedalus/maze-5x5.png">
-<meta property="og:updated_time" content="2016-09-14T19:26:46.870Z">
+<meta property="og:updated_time" content="2016-09-15T14:32:14.575Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maze generator with Fable">
 <meta name="twitter:description" content="Quick links
+Follow up
 Source code
 Online demo
 
-Redgate’s first ever coding challengeFor quite some time I was looking for excuse to use Fable. Fable is F# to JavaScript compiler. I generally shy away from JavaS">
+Redgate’s first ever coding challengeFor quite some time I was looking for excuse to use Fable. Fable is F# to JavaScript compiler. I generally shy away">
 <meta name="twitter:image" content="http://red-green-rewrite.github.io/images/daedalus/maze-100x100.png">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
@@ -105,6 +108,7 @@ Redgate’s first ever coding challengeFor quite some time I was looking for exc
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
+<li><a href="/2016/09/15/Shaking-maze-generator/">Follow up</a></li>
 <li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code</a></li>
 <li><a href="https://dl.dropboxusercontent.com/u/317815/daedalus/index.html" target="_blank" rel="external">Online demo</a></li>
 </ul>
@@ -124,7 +128,7 @@ Redgate’s first ever coding challengeFor quite some time I was looking for exc
 <h2 id="The-algorithm"><a href="#The-algorithm" class="headerlink" title="The algorithm"></a>The algorithm</h2><p>There are few algorithms listed on <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm" target="_blank" rel="external">Wikipedia</a> and randomized depth-first search is probably the simplest one. </p>
 <p>It has two disadvantages:</p>
 <ul>
-<li>solution has a low branching factor and contain many long corridors</li>
+<li>solution has a low branching factor and contain many long corridors (please note, that this issue was addressed in <a href="/2016/09/15/Shaking-maze-generator/">following blogpost</a>)</li>
 <li>solution does not contain cycles - of course, cycles can be seen as shortcuts, therefore making it easier for potential adventurer, but also they open the door “to be lost forever”, making it infinitely harder. Trade-offs, as usual. </li>
 </ul>
 <p>I’m going to decompose the solution into smaller pieces instead of using single monolithic function. </p>
@@ -132,7 +136,7 @@ Redgate’s first ever coding challengeFor quite some time I was looking for exc
 <p>A physicist and a mathematician setting in a faculty lounge. Suddenly, the coffee machine catches on fire. The physicist grabs a bucket and leaps towards the sink, fills the bucket with water and puts out the fire. The second day, the same two sit in the same lounge. Again, the coffee machine catches on fire. This time, the mathematician stands up, gets a bucket, hands the bucket to the physicist, thus reducing the problem to a previously solved one. </p>
 </blockquote>
 <p>Let’s start with generic depth-first search then:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> DFS =</span><br><span class="line">    <span class="comment">// ('T -&gt; unit) -&gt; ('T -&gt; bool) -&gt; ('T -&gt; 'T seq) -&gt; 'T -&gt; T' seq</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">rec</span> traverse mark test fanout node =  </span><br><span class="line">        seq &#123;</span><br><span class="line">            <span class="keyword">match</span> node |&gt; test <span class="keyword">with</span></span><br><span class="line">            | <span class="keyword">false</span> -&gt; </span><br><span class="line">                <span class="keyword">yield</span> node |&gt; apply mark</span><br><span class="line">                <span class="keyword">yield!</span> node |&gt; fanout |&gt; Seq.collect (traverse mark test fanout)</span><br><span class="line">            | _ -&gt; ()  </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> DFS =</span><br><span class="line">    <span class="comment">// ('T -&gt; unit) -&gt; ('T -&gt; bool) -&gt; ('T -&gt; 'T seq) -&gt; 'T -&gt; 'T seq</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">rec</span> traverse mark test fanout node =  </span><br><span class="line">        seq &#123;</span><br><span class="line">            <span class="keyword">match</span> node |&gt; test <span class="keyword">with</span></span><br><span class="line">            | <span class="keyword">false</span> -&gt; </span><br><span class="line">                <span class="keyword">yield</span> node |&gt; apply mark</span><br><span class="line">                <span class="keyword">yield!</span> node |&gt; fanout |&gt; Seq.collect (traverse mark test fanout)</span><br><span class="line">            | _ -&gt; ()  </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 <p>where <code>mark: &#39;T -&gt; unit</code> is the function which will take a node and mark it as visited, <code>test: &#39;T -&gt; bool</code> will test is node has been visisted already, <code>fanout: &#39;T -&gt; &#39;T seq</code> will take a node and return a sequence of connected nodes (neighbours?) and finally <code>node: &#39;T</code> is just a starting point.</p>
 <p>The algorithm goes like this:</p>
 <ul>
@@ -206,6 +210,7 @@ Redgate’s first ever coding challengeFor quite some time I was looking for exc
 <p>I guess that’s it.</p>
 <p>You can find solution on <a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">github</a>. It actually has many branches as I was trying many approaches. I started with “Immutable domain with VirtualDOM to generate SVG”, then I switched to “Mutable domain with VirtualDOM to generate SVG paths”, then I switched to “Mutable domain with jCanvas” and then I realized that half of domain was actually needed by VirtualDOM approach only. So, last incarnation if Daedalus is “Mutable mini domain with jCanvas”. </p>
 <p>If you want to just see it work, you can find it <a href="https://dl.dropboxusercontent.com/u/317815/daedalus/index.html" target="_blank" rel="external">here</a></p>
+<h2 id="Dealing-with-“low-branching-factory”"><a href="#Dealing-with-“low-branching-factory”" class="headerlink" title="Dealing with “low branching factory”"></a>Dealing with “low branching factory”</h2><p>As mentioned DFS has a problem with low branching factor. I’ll try to address the problem in <a href="/2016/09/15/Shaking-maze-generator/">next blogpost</a>.</p>
 <p>Thanks:</p>
 <ul>
 <li><a href="https://fable-compiler.github.io/" target="_blank" rel="external">Fable</a></li>
@@ -218,18 +223,27 @@ Redgate’s first ever coding challengeFor quite some time I was looking for exc
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="cit44pdpq00006cjw19eyocvz" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="cit4febi10000jsjwwdr4ty8y" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/f/">f#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fable/">fable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graph/">graph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fable/">fable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
 
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/09/15/Shaking-maze-generator/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Shaking maze generator
+        
+      </div>
+    </a>
   
   
     <a href="/2016/09/14/Use-apply-and-carry-on/" id="article-nav-older" class="article-nav-link-wrap">
@@ -259,7 +273,7 @@ Redgate’s first ever coding challengeFor quite some time I was looking for exc
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/F/">F#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/f/">f#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
     </div>
   </div>
 
@@ -269,7 +283,7 @@ Redgate’s first ever coding challengeFor quite some time I was looking for exc
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/F/" style="font-size: 10px;">F#</a> <a href="/tags/c/" style="font-size: 10px;">c#</a> <a href="/tags/f/" style="font-size: 20px;">f#</a> <a href="/tags/fable/" style="font-size: 10px;">fable</a> <a href="/tags/graph/" style="font-size: 10px;">graph</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+      <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/fable/" style="font-size: 15px;">fable</a> <a href="/tags/fsharp/" style="font-size: 20px;">fsharp</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a>
     </div>
   </div>
 
@@ -289,6 +303,10 @@ Redgate’s first ever coding challengeFor quite some time I was looking for exc
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/09/15/Shaking-maze-generator/">Shaking maze generator</a>
+          </li>
         
           <li>
             <a href="/2016/09/14/Maze-generator-with-Fable/">Maze generator with Fable</a>

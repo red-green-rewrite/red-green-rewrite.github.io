@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Shaking maze generator | Red, Green, Rewrite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Quick links
+Previous article
+Source code
+Online demo
+
+NoteThis blogpost requires familiarity with previous one.
+Low branching factorOne of the disadvantages of using DFS to build mazes is “low branchi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shaking maze generator">
+<meta property="og:url" content="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/index.html">
+<meta property="og:site_name" content="Red, Green, Rewrite">
+<meta property="og:description" content="Quick links
+Previous article
+Source code
+Online demo
+
+NoteThis blogpost requires familiarity with previous one.
+Low branching factorOne of the disadvantages of using DFS to build mazes is “low branchi">
+<meta property="og:updated_time" content="2016-09-15T14:33:28.234Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shaking maze generator">
+<meta name="twitter:description" content="Quick links
+Previous article
+Source code
+Online demo
+
+NoteThis blogpost requires familiarity with previous one.
+Low branching factorOne of the disadvantages of using DFS to build mazes is “low branchi">
+  
+    <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Red, Green, Rewrite</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">the tales about software development</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Shaking-maze-generator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/15/Shaking-maze-generator/" class="article-date">
+  <time datetime="2016-09-15T14:19:49.000Z" itemprop="datePublished">2016-09-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Shaking maze generator
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
+<li><a href="/2016/09/14/Maze-generator-with-Fable/">Previous article</a></li>
+<li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code</a></li>
+<li><a href="https://dl.dropboxusercontent.com/u/317815/daedalus/index.html" target="_blank" rel="external">Online demo</a></li>
+</ul>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p>This blogpost requires familiarity with <a href="/2016/09/14/Maze-generator-with-Fable/">previous one</a>.</p>
+<h2 id="Low-branching-factor"><a href="#Low-branching-factor" class="headerlink" title="Low branching factor"></a>Low branching factor</h2><p>One of the disadvantages of using DFS to build mazes is “low branching factor”. The problem is that it actually runs for long time before hitting dead-end and having to backtrack, so it creates very long corridors with no room to “make the wrong turn” for potential adventurer.<br>Let’s deal with it.</p>
+<h2 id="The-algorithm"><a href="#The-algorithm" class="headerlink" title="The algorithm"></a>The algorithm</h2><p>Originally I used recursive version, but to avoid stack overflow, actual demo was done non-recursive version of DFS. </p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> stackless mark test fanout node = seq &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mutable</span> stack = [[node]]</span><br><span class="line">    <span class="keyword">while</span> stack.Length &gt; <span class="number">0</span> <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">let</span> head, stack' = </span><br><span class="line">            <span class="keyword">match</span> stack <span class="keyword">with</span></span><br><span class="line">            | [] -&gt; None, [] </span><br><span class="line">            | [] :: rest -&gt; None, rest</span><br><span class="line">            | (head :: tail) :: rest -&gt;</span><br><span class="line">                <span class="keyword">if</span> test head <span class="keyword">then</span> None, tail :: rest</span><br><span class="line">                <span class="keyword">else</span> head |&gt; apply mark |&gt; Some, (head |&gt; fanout |&gt; List.ofSeq) :: tail :: rest</span><br><span class="line">        <span class="keyword">match</span> head <span class="keyword">with</span> | Some n -&gt; <span class="keyword">yield</span> n | _ -&gt; ()</span><br><span class="line">        stack &lt;- stack'</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This version will be modified to allow “shaking the stack”. I’ll introduce one argument (<code>shake</code>) and use <code>shake stack</code> instead of just <code>stack</code> in match statement.</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> stackless mark test fanout shake node = seq &#123; <span class="comment">// &lt;-- here</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mutable</span> stack = [[node]]</span><br><span class="line">    <span class="keyword">while</span> stack.Length &gt; <span class="number">0</span> <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">let</span> head, stack' = </span><br><span class="line">            <span class="keyword">match</span> shake stack <span class="keyword">with</span> <span class="comment">// &lt;-- and here</span></span><br><span class="line">            | [] -&gt; None, [] </span><br><span class="line">            | [] :: rest -&gt; None, rest</span><br><span class="line">            | (head :: tail) :: rest -&gt;</span><br><span class="line">                <span class="keyword">if</span> test head <span class="keyword">then</span> None, tail :: rest</span><br><span class="line">                <span class="keyword">else</span> head |&gt; apply mark |&gt; Some, (head |&gt; fanout |&gt; List.ofSeq) :: tail :: rest</span><br><span class="line">        <span class="keyword">match</span> head <span class="keyword">with</span> | Some n -&gt; <span class="keyword">yield</span> n | _ -&gt; ()</span><br><span class="line">        stack &lt;- stack'</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>That’s absolutely it in “The algorithm” layer.</p>
+<h2 id="The-glue"><a href="#The-glue" class="headerlink" title="The glue"></a>The glue</h2><p>There was a “glue” layer adapting “The algorithm” to “The domain” and it just stopped working as we added new argument to the function. Don’t worry, though, it just a simple fix. </p>
+<p>Previously it was calling <code>traverse</code> (or <code>stackless</code> depending which approach you used ‘elegant’ or ‘safe’) now it should call <code>stackless</code> (as <code>traverse</code> does not support shaking) with this extra argument. So the old code: </p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </span><br><span class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle)</span><br></pre></td></tr></table></figure>
+<p>should be changed to:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </span><br><span class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle) id</span><br></pre></td></tr></table></figure>
+<p>and the code will compile again and work exactly as it was working before (you may remember that <code>id</code> function does absolutely nothing). Why we did that then?</p>
+<p>Because now, on every single step we have an ability to modify the backtracking stack. </p>
+<p>I’ll suggest something like:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> shake stack = </span><br><span class="line">    <span class="keyword">if</span> Random.random () &gt; <span class="number">0.01</span> <span class="keyword">then</span> stack</span><br><span class="line">    <span class="keyword">else</span> stack |&gt; Array.ofList |&gt; apply Array.shuffleInPlace |&gt; Array.toList</span><br></pre></td></tr></table></figure>
+<p>Which in 99% of cases returns <code>stack</code> unmodified but from time to time shuffles it completely. Of course, it would be nice to use it now (<code>id</code> gets replaced by <code>shake</code>):</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </span><br><span class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle) shake</span><br></pre></td></tr></table></figure>
+<p><em>NOTE</em>: I did not really modify the algorithm I just injected some extra behavior into it, but it is totally externally controlled (kind of definition of “injected”, right?).</p>
+<p>And thats about it. Functional composition rlz.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" data-id="cit4febic0003jsjwz2bmpexk" class="article-share-link">Share</a>
+      
+        <a href="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fable/">fable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/09/14/Maze-generator-with-Fable/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Maze generator with Fable</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/fable/" style="font-size: 15px;">fable</a> <a href="/tags/fsharp/" style="font-size: 20px;">fsharp</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/09/15/Shaking-maze-generator/">Shaking maze generator</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/Maze-generator-with-Fable/">Maze generator with Fable</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/Use-apply-and-carry-on/">Use apply and carry on</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/27/State-Machine-Construction-Kit-for-F/">State Machine Construction Kit for F#</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/17/A-perfect-square-kata/">A perfect square kata</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Milosz Krajewski<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'red-green-rewrite';
+  
+  var disqus_url = 'http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

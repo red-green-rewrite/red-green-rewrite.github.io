@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://red-green-rewrite.github.io/"/>
-  <updated>2016-09-14T19:26:46.870Z</updated>
+  <updated>2016-09-15T14:33:28.234Z</updated>
   <id>http://red-green-rewrite.github.io/</id>
   
   <author>
@@ -16,13 +16,66 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Shaking maze generator</title>
+    <link href="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/"/>
+    <id>http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/</id>
+    <published>2016-09-15T14:19:49.000Z</published>
+    <updated>2016-09-15T14:33:28.234Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;Quick-links&quot;&gt;&lt;a href=&quot;#Quick-links&quot; class=&quot;headerlink&quot; title=&quot;Quick links&quot;&gt;&lt;/a&gt;Quick links&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/2016/09/14/Maze-generator-with-Fable/&quot;&gt;Previous article&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/MiloszKrajewski/fable-daedalus&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://dl.dropboxusercontent.com/u/317815/daedalus/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Online demo&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Note&quot;&gt;&lt;a href=&quot;#Note&quot; class=&quot;headerlink&quot; title=&quot;Note&quot;&gt;&lt;/a&gt;Note&lt;/h2&gt;&lt;p&gt;This blogpost requires familiarity with &lt;a href=&quot;/2016/09/14/Maze-generator-with-Fable/&quot;&gt;previous one&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;Low-branching-factor&quot;&gt;&lt;a href=&quot;#Low-branching-factor&quot; class=&quot;headerlink&quot; title=&quot;Low branching factor&quot;&gt;&lt;/a&gt;Low branching factor&lt;/h2&gt;&lt;p&gt;One of the disadvantages of using DFS to build mazes is “low branching factor”. The problem is that it actually runs for long time before hitting dead-end and having to backtrack, so it creates very long corridors with no room to “make the wrong turn” for potential adventurer.&lt;br&gt;Let’s deal with it.&lt;/p&gt;
+&lt;h2 id=&quot;The-algorithm&quot;&gt;&lt;a href=&quot;#The-algorithm&quot; class=&quot;headerlink&quot; title=&quot;The algorithm&quot;&gt;&lt;/a&gt;The algorithm&lt;/h2&gt;&lt;p&gt;Originally I used recursive version, but to avoid stack overflow, actual demo was done non-recursive version of DFS. &lt;/p&gt;
+&lt;figure class=&quot;highlight fsharp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; stackless mark test fanout node = seq &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;mutable&lt;/span&gt; stack = [[node]]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; stack.Length &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; head, stack&#39; = &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;match&lt;/span&gt; stack &lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | [] -&amp;gt; None, [] &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | [] :: rest -&amp;gt; None, rest&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | (head :: tail) :: rest -&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; test head &lt;span class=&quot;keyword&quot;&gt;then&lt;/span&gt; None, tail :: rest&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; head |&amp;gt; apply mark |&amp;gt; Some, (head |&amp;gt; fanout |&amp;gt; List.ofSeq) :: tail :: rest&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;match&lt;/span&gt; head &lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt; | Some n -&amp;gt; &lt;span class=&quot;keyword&quot;&gt;yield&lt;/span&gt; n | _ -&amp;gt; ()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        stack &amp;lt;- stack&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;This version will be modified to allow “shaking the stack”. I’ll introduce one argument (&lt;code&gt;shake&lt;/code&gt;) and use &lt;code&gt;shake stack&lt;/code&gt; instead of just &lt;code&gt;stack&lt;/code&gt; in match statement.&lt;/p&gt;
+&lt;figure class=&quot;highlight fsharp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; stackless mark test fanout shake node = seq &amp;#123; &lt;span class=&quot;comment&quot;&gt;// &amp;lt;-- here&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;mutable&lt;/span&gt; stack = [[node]]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; stack.Length &amp;gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; head, stack&#39; = &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;match&lt;/span&gt; shake stack &lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;// &amp;lt;-- and here&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | [] -&amp;gt; None, [] &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | [] :: rest -&amp;gt; None, rest&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | (head :: tail) :: rest -&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; test head &lt;span class=&quot;keyword&quot;&gt;then&lt;/span&gt; None, tail :: rest&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; head |&amp;gt; apply mark |&amp;gt; Some, (head |&amp;gt; fanout |&amp;gt; List.ofSeq) :: tail :: rest&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;match&lt;/span&gt; head &lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt; | Some n -&amp;gt; &lt;span class=&quot;keyword&quot;&gt;yield&lt;/span&gt; n | _ -&amp;gt; ()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        stack &amp;lt;- stack&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;That’s absolutely it in “The algorithm” layer.&lt;/p&gt;
+&lt;h2 id=&quot;The-glue&quot;&gt;&lt;a href=&quot;#The-glue&quot; class=&quot;headerlink&quot; title=&quot;The glue&quot;&gt;&lt;/a&gt;The glue&lt;/h2&gt;&lt;p&gt;There was a “glue” layer adapting “The algorithm” to “The domain” and it just stopped working as we added new argument to the function. Don’t worry, though, it just a simple fix. &lt;/p&gt;
+&lt;p&gt;Previously it was calling &lt;code&gt;traverse&lt;/code&gt; (or &lt;code&gt;stackless&lt;/code&gt; depending which approach you used ‘elegant’ or ‘safe’) now it should call &lt;code&gt;stackless&lt;/code&gt; (as &lt;code&gt;traverse&lt;/code&gt; does not support shaking) with this extra argument. So the old code: &lt;/p&gt;
+&lt;figure class=&quot;highlight fsharp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;InitAt (&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;|&amp;gt; DFS.stackless (targetOf &amp;gt;&amp;gt; mark) (targetOf &amp;gt;&amp;gt; test) (targetOf &amp;gt;&amp;gt; fanout &amp;gt;&amp;gt; Array.shuffle)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;should be changed to:&lt;/p&gt;
+&lt;figure class=&quot;highlight fsharp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;InitAt (&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;|&amp;gt; DFS.stackless (targetOf &amp;gt;&amp;gt; mark) (targetOf &amp;gt;&amp;gt; test) (targetOf &amp;gt;&amp;gt; fanout &amp;gt;&amp;gt; Array.shuffle) id&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;and the code will compile again and work exactly as it was working before (you may remember that &lt;code&gt;id&lt;/code&gt; function does absolutely nothing). Why we did that then?&lt;/p&gt;
+&lt;p&gt;Because now, on every single step we have an ability to modify the backtracking stack. &lt;/p&gt;
+&lt;p&gt;I’ll suggest something like:&lt;/p&gt;
+&lt;figure class=&quot;highlight fsharp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; shake stack = &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; Random.random () &amp;gt; &lt;span class=&quot;number&quot;&gt;0.01&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;then&lt;/span&gt; stack&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; stack |&amp;gt; Array.ofList |&amp;gt; apply Array.shuffleInPlace |&amp;gt; Array.toList&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Which in 99% of cases returns &lt;code&gt;stack&lt;/code&gt; unmodified but from time to time shuffles it completely. Of course, it would be nice to use it now (&lt;code&gt;id&lt;/code&gt; gets replaced by &lt;code&gt;shake&lt;/code&gt;):&lt;/p&gt;
+&lt;figure class=&quot;highlight fsharp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;InitAt (&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;|&amp;gt; DFS.stackless (targetOf &amp;gt;&amp;gt; mark) (targetOf &amp;gt;&amp;gt; test) (targetOf &amp;gt;&amp;gt; fanout &amp;gt;&amp;gt; Array.shuffle) shake&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;em&gt;NOTE&lt;/em&gt;: I did not really modify the algorithm I just injected some extra behavior into it, but it is totally externally controlled (kind of definition of “injected”, right?).&lt;/p&gt;
+&lt;p&gt;And thats about it. Functional composition rlz.&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Quick-links&quot;&gt;&lt;a href=&quot;#Quick-links&quot; class=&quot;headerlink&quot; title=&quot;Quick links&quot;&gt;&lt;/a&gt;Quick links&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/2016/09/14/Maze-ge
+    
+    </summary>
+    
+    
+      <category term="fsharp" scheme="http://red-green-rewrite.github.io/tags/fsharp/"/>
+    
+      <category term="fable" scheme="http://red-green-rewrite.github.io/tags/fable/"/>
+    
+      <category term="webpack" scheme="http://red-green-rewrite.github.io/tags/webpack/"/>
+    
+      <category term="algorithm" scheme="http://red-green-rewrite.github.io/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Maze generator with Fable</title>
     <link href="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/"/>
     <id>http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/</id>
     <published>2016-09-14T19:53:39.000Z</published>
-    <updated>2016-09-14T19:26:46.870Z</updated>
+    <updated>2016-09-15T14:32:14.575Z</updated>
     
     <content type="html">&lt;h2 id=&quot;Quick-links&quot;&gt;&lt;a href=&quot;#Quick-links&quot; class=&quot;headerlink&quot; title=&quot;Quick links&quot;&gt;&lt;/a&gt;Quick links&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/2016/09/15/Shaking-maze-generator/&quot;&gt;Follow up&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/MiloszKrajewski/fable-daedalus&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://dl.dropboxusercontent.com/u/317815/daedalus/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Online demo&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -42,7 +95,7 @@
 &lt;h2 id=&quot;The-algorithm&quot;&gt;&lt;a href=&quot;#The-algorithm&quot; class=&quot;headerlink&quot; title=&quot;The algorithm&quot;&gt;&lt;/a&gt;The algorithm&lt;/h2&gt;&lt;p&gt;There are few algorithms listed on &lt;a href=&quot;https://en.wikipedia.org/wiki/Maze_generation_algorithm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Wikipedia&lt;/a&gt; and randomized depth-first search is probably the simplest one. &lt;/p&gt;
 &lt;p&gt;It has two disadvantages:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;solution has a low branching factor and contain many long corridors&lt;/li&gt;
+&lt;li&gt;solution has a low branching factor and contain many long corridors (please note, that this issue was addressed in &lt;a href=&quot;/2016/09/15/Shaking-maze-generator/&quot;&gt;following blogpost&lt;/a&gt;)&lt;/li&gt;
 &lt;li&gt;solution does not contain cycles - of course, cycles can be seen as shortcuts, therefore making it easier for potential adventurer, but also they open the door “to be lost forever”, making it infinitely harder. Trade-offs, as usual. &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;I’m going to decompose the solution into smaller pieces instead of using single monolithic function. &lt;/p&gt;
@@ -50,7 +103,7 @@
 &lt;p&gt;A physicist and a mathematician setting in a faculty lounge. Suddenly, the coffee machine catches on fire. The physicist grabs a bucket and leaps towards the sink, fills the bucket with water and puts out the fire. The second day, the same two sit in the same lounge. Again, the coffee machine catches on fire. This time, the mathematician stands up, gets a bucket, hands the bucket to the physicist, thus reducing the problem to a previously solved one. &lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Let’s start with generic depth-first search then:&lt;/p&gt;
-&lt;figure class=&quot;highlight fsharp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; DFS =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// (&#39;T -&amp;gt; unit) -&amp;gt; (&#39;T -&amp;gt; bool) -&amp;gt; (&#39;T -&amp;gt; &#39;T seq) -&amp;gt; &#39;T -&amp;gt; T&#39; seq&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;rec&lt;/span&gt; traverse mark test fanout node =  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        seq &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;match&lt;/span&gt; node |&amp;gt; test &lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt; -&amp;gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;yield&lt;/span&gt; node |&amp;gt; apply mark&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;yield!&lt;/span&gt; node |&amp;gt; fanout |&amp;gt; Seq.collect (traverse mark test fanout)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | _ -&amp;gt; ()  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight fsharp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; DFS =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// (&#39;T -&amp;gt; unit) -&amp;gt; (&#39;T -&amp;gt; bool) -&amp;gt; (&#39;T -&amp;gt; &#39;T seq) -&amp;gt; &#39;T -&amp;gt; &#39;T seq&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;rec&lt;/span&gt; traverse mark test fanout node =  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        seq &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;match&lt;/span&gt; node |&amp;gt; test &lt;span class=&quot;keyword&quot;&gt;with&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt; -&amp;gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;yield&lt;/span&gt; node |&amp;gt; apply mark&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;yield!&lt;/span&gt; node |&amp;gt; fanout |&amp;gt; Seq.collect (traverse mark test fanout)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            | _ -&amp;gt; ()  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;where &lt;code&gt;mark: &amp;#39;T -&amp;gt; unit&lt;/code&gt; is the function which will take a node and mark it as visited, &lt;code&gt;test: &amp;#39;T -&amp;gt; bool&lt;/code&gt; will test is node has been visisted already, &lt;code&gt;fanout: &amp;#39;T -&amp;gt; &amp;#39;T seq&lt;/code&gt; will take a node and return a sequence of connected nodes (neighbours?) and finally &lt;code&gt;node: &amp;#39;T&lt;/code&gt; is just a starting point.&lt;/p&gt;
 &lt;p&gt;The algorithm goes like this:&lt;/p&gt;
 &lt;ul&gt;
@@ -124,6 +177,7 @@
 &lt;p&gt;I guess that’s it.&lt;/p&gt;
 &lt;p&gt;You can find solution on &lt;a href=&quot;https://github.com/MiloszKrajewski/fable-daedalus&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github&lt;/a&gt;. It actually has many branches as I was trying many approaches. I started with “Immutable domain with VirtualDOM to generate SVG”, then I switched to “Mutable domain with VirtualDOM to generate SVG paths”, then I switched to “Mutable domain with jCanvas” and then I realized that half of domain was actually needed by VirtualDOM approach only. So, last incarnation if Daedalus is “Mutable mini domain with jCanvas”. &lt;/p&gt;
 &lt;p&gt;If you want to just see it work, you can find it &lt;a href=&quot;https://dl.dropboxusercontent.com/u/317815/daedalus/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Dealing-with-“low-branching-factory”&quot;&gt;&lt;a href=&quot;#Dealing-with-“low-branching-factory”&quot; class=&quot;headerlink&quot; title=&quot;Dealing with “low branching factory”&quot;&gt;&lt;/a&gt;Dealing with “low branching factory”&lt;/h2&gt;&lt;p&gt;As mentioned DFS has a problem with low branching factor. I’ll try to address the problem in &lt;a href=&quot;/2016/09/15/Shaking-maze-generator/&quot;&gt;next blogpost&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Thanks:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://fable-compiler.github.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Fable&lt;/a&gt;&lt;/li&gt;
@@ -137,18 +191,18 @@
     <summary type="html">
     
       &lt;h2 id=&quot;Quick-links&quot;&gt;&lt;a href=&quot;#Quick-links&quot; class=&quot;headerlink&quot; title=&quot;Quick links&quot;&gt;&lt;/a&gt;Quick links&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/
+&lt;li&gt;&lt;a href=&quot;/2016/09/15/Shaking
     
     </summary>
     
     
-      <category term="f#" scheme="http://red-green-rewrite.github.io/tags/f/"/>
+      <category term="fsharp" scheme="http://red-green-rewrite.github.io/tags/fsharp/"/>
     
       <category term="fable" scheme="http://red-green-rewrite.github.io/tags/fable/"/>
     
       <category term="webpack" scheme="http://red-green-rewrite.github.io/tags/webpack/"/>
     
-      <category term="graph" scheme="http://red-green-rewrite.github.io/tags/graph/"/>
+      <category term="algorithm" scheme="http://red-green-rewrite.github.io/tags/algorithm/"/>
     
   </entry>
   
@@ -157,7 +211,7 @@
     <link href="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/"/>
     <id>http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/</id>
     <published>2016-09-14T17:47:16.000Z</published>
-    <updated>2016-09-15T09:26:01.411Z</updated>
+    <updated>2016-09-15T14:28:13.293Z</updated>
     
     <content type="html">&lt;p&gt;One of everyone’s favourite features of F# is pipe (&lt;code&gt;|&amp;gt;&lt;/code&gt;) operator. It allows to pipe output of one function as input to another function preserving &lt;a href=&quot;http://theburningmonk.com/2014/12/being-visually-honest-with-f/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;visual honesty&lt;/a&gt;. The general idea is that, in English, we read &lt;em&gt;left-to-right&lt;/em&gt; and &lt;em&gt;top-down&lt;/em&gt;. In C# (C, C++, Java, Pascal, Python) we read in all possible directions, most likely &lt;em&gt;top-down&lt;/em&gt; for overall structure but &lt;em&gt;botton-up&lt;/em&gt; and &lt;em&gt;right-to-left&lt;/em&gt; for single statements.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/visual_dishonesty.png&quot; alt=&quot;Visual honesty&quot;&gt;&lt;/p&gt;
@@ -191,7 +245,7 @@
     </summary>
     
     
-      <category term="F#" scheme="http://red-green-rewrite.github.io/tags/F/"/>
+      <category term="fsharp" scheme="http://red-green-rewrite.github.io/tags/fsharp/"/>
     
   </entry>
   
@@ -200,7 +254,7 @@
     <link href="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/"/>
     <id>http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/</id>
     <published>2016-06-27T00:46:03.000Z</published>
-    <updated>2016-07-11T08:30:35.043Z</updated>
+    <updated>2016-09-15T14:28:11.631Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: There is a lot of code in this article, as it is repeated and iteratively added. The final version is just 28 lines near the end, but I think you should read the whole thing anyway.&lt;/p&gt;
 &lt;p&gt;Once upon the time I needed to implement state machine. To not reinvent the wheel I reviewed what’s available: &lt;a href=&quot;http://msdn.microsoft.com/en-gb/vstudio/jj684582.aspx&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Windows Workflow Foundation&lt;/a&gt;, &lt;a href=&quot;https://github.com/appccelerate/statemachine&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Appccelerate.StateMachine&lt;/a&gt;, &lt;a href=&quot;https://code.google.com/p/bbvcommon/wiki/StateMachineTutorial&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;bbv.Common.StateMachine&lt;/a&gt;, &lt;a href=&quot;https://github.com/nblumhardt/stateless&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Stateless&lt;/a&gt;, &lt;a href=&quot;http://simplestatemachine.codeplex.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SimpleStateMachine&lt;/a&gt;, &lt;a href=&quot;https://code.google.com/p/solid-state&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Solid.State&lt;/a&gt;, and &lt;a href=&quot;https://github.com/OmerMor/StateMachineToolkit/tree/master/src/StateMachineToolkit&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;StateMachineToolkit&lt;/a&gt;. Windows Workflow Foundation was just scary, apart from the fact that State Machine is not available in .NET 4.0. It didn’t look lightweight either.&lt;/p&gt;
@@ -261,7 +315,7 @@
     </summary>
     
     
-      <category term="f#" scheme="http://red-green-rewrite.github.io/tags/f/"/>
+      <category term="fsharp" scheme="http://red-green-rewrite.github.io/tags/fsharp/"/>
     
       <category term="state-machine" scheme="http://red-green-rewrite.github.io/tags/state-machine/"/>
     
@@ -272,7 +326,7 @@
     <link href="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/"/>
     <id>http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/</id>
     <published>2016-05-17T15:44:09.000Z</published>
-    <updated>2016-05-18T09:39:43.749Z</updated>
+    <updated>2016-09-15T13:21:27.246Z</updated>
     
     <content type="html">&lt;p&gt;I was doing some katas on &lt;a href=&quot;http://www.codewars.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CodeWars&lt;/a&gt; recently, and some of them were involving &lt;a href=&quot;https://en.wikipedia.org/wiki/Square_number&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;perfect square numbers&lt;/a&gt;. In short, perfect square number is an integer which square root is also an integer, like 9, 16, 25, and 36.&lt;/p&gt;
 &lt;p&gt;Anyway, solutions which got most votes in both categories, &lt;em&gt;best practice&lt;/em&gt; and &lt;em&gt;clever&lt;/em&gt; use:&lt;/p&gt;
@@ -313,7 +367,7 @@
     
       <category term="kata" scheme="http://red-green-rewrite.github.io/tags/kata/"/>
     
-      <category term="c#" scheme="http://red-green-rewrite.github.io/tags/c/"/>
+      <category term="csharp" scheme="http://red-green-rewrite.github.io/tags/csharp/"/>
     
   </entry>
   
