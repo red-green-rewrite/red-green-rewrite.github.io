@@ -204,7 +204,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="cit39ms3v0005fwjw0yh3nha3" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="cit44pdpq00006cjw19eyocvz" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -254,12 +254,20 @@
 <p>The function itself is trivial, it takes a function and an argument, executes given function with given argument but then returns it, so the argument goes through the function: </p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> y = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin |&gt; apply (printf <span class="string">"%g"</span>) |&gt; Math.Exp |&gt; Math.Round</span><br></pre></td></tr></table></figure>
 <p>In the example above, the function (<code>printf &quot;%g&quot;</code>) has been <em>applied</em> to a value passed between <code>Math.Sin</code> and <code>Math.Exp</code> but did not require any temporary variables or breaking the flow.</p>
+<p>Recently I needed to shuffle an array. The algorithm I used shuffles array in place:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">inline</span> swapInPlace i j (array: <span class="symbol">'a</span>[]) = </span><br><span class="line">    <span class="keyword">let</span> t = array.[i]</span><br><span class="line">    array.[i] &lt;- array.[j]</span><br><span class="line">    array.[j] &lt;- t</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> shuffleInPlace (array: <span class="symbol">'a</span>[]) =</span><br><span class="line">    <span class="keyword">for</span> i = array.Length - <span class="number">1</span> <span class="keyword">downto</span> <span class="number">1</span> <span class="keyword">do</span></span><br><span class="line">        array |&gt; swapInPlace i (Random.randomInt <span class="number">0</span> i)</span><br></pre></td></tr></table></figure>
+<p>(<code>Random.randomInt</code> is not a standard function, but its implementation is irrelevant for this example)</p>
+<p>I needed as “immutable” function, which will return a new array which is shuffled version of input array. Let’s do it:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> shuffle array = </span><br><span class="line">    <span class="keyword">let</span> result = Array.copy array</span><br><span class="line">    shuffleInPlace result</span><br><span class="line">    result</span><br></pre></td></tr></table></figure>
+<p>Or maybe we can do better with apply? Yes, we can:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> shuffle array = array |&gt; Array.copy |&gt; apply shuffleInPlace</span><br></pre></td></tr></table></figure>
+<p><em>Make a copy then apply shuffle</em>. I like it. </p>
 <p>So, <strong>use apply and carry on</strong>!</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/" data-id="cit35494n0002fwjwq6drf69i" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/" data-id="cit44pdpw00016cjw79ko57zb" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -349,7 +357,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/" data-id="cit1qet4n0001kcjwh9mk7ckj" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/" data-id="cit44pdqc000c6cjwu0w5ggbi" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -417,7 +425,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/" data-id="cit1qet5f000ekcjwxs7i5f9a" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/" data-id="cit44pdqo000g6cjwxwg5vdm5" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/#disqus_thread" class="article-comment-link">Comments</a>
       
