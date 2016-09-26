@@ -116,7 +116,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" data-id="citit0a35000338jbid7i3lm8" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" data-id="citk83fuw0004fkjbxhkf5kah" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -157,10 +157,10 @@
 <li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code</a></li>
 <li><a href="https://dl.dropboxusercontent.com/u/317815/daedalus/index.html" target="_blank" rel="external">Online demo</a></li>
 </ul>
-<h2 id="Redgate’s-first-ever-coding-challenge"><a href="#Redgate’s-first-ever-coding-challenge" class="headerlink" title="Redgate’s first ever coding challenge"></a>Redgate’s first ever coding challenge</h2><p>For quite some time I was looking for excuse to use <a href="https://fable-compiler.github.io/" target="_blank" rel="external">Fable</a>. Fable is <a href="http://fsharp.org/" target="_blank" rel="external">F#</a> to JavaScript compiler. I generally shy away from JavaScript, as I am biased towards backend but as a big fan of F# I wanted to play a little with Fable (and <a href="https://www.scala-js.org/" target="_blank" rel="external">Scala.js</a> actually). On top of that, I wanted to try some other technologies I’ve never used before: <a href="https://github.com/Matt-Esch/virtual-dom" target="_blank" rel="external">VirtualDom</a> (maybe <a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a>), <a href="https://webpack.github.io/" target="_blank" rel="external">Webpack</a>, <a href="http://www.pixijs.com/" target="_blank" rel="external">Pixi.js</a>. All I needed was an excuse…</p>
+<h2 id="Redgate’s-first-ever-coding-challenge"><a href="#Redgate’s-first-ever-coding-challenge" class="headerlink" title="Redgate’s first ever coding challenge"></a>Redgate’s first ever coding challenge</h2><p>For quite some time I was looking for an excuse to use <a href="https://fable-compiler.github.io/" target="_blank" rel="external">Fable</a>. Fable is <a href="http://fsharp.org/" target="_blank" rel="external">F#</a> to JavaScript compiler. I generally shy away from JavaScript, as I am biased towards backend but as a big fan of F# I wanted to play a little with Fable (and <a href="https://www.scala-js.org/" target="_blank" rel="external">Scala.js</a> actually). On top of that, I wanted to try some other technologies I’ve never used before: <a href="https://github.com/Matt-Esch/virtual-dom" target="_blank" rel="external">VirtualDom</a> (maybe <a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a>), <a href="https://webpack.github.io/" target="_blank" rel="external">Webpack</a>, <a href="http://www.pixijs.com/" target="_blank" rel="external">Pixi.js</a>. All I needed was an excuse…</p>
 <p>I’ve found <a href="http://www.red-gate.com/our-company/entrypage/coding-challenge" target="_blank" rel="external">Redgate’s first ever coding challenge</a> on LinkedIn and I decided to do it with Fable in the browser. The challenge is about writing an application to generate mazes (thus the Daedalus reference). I wasn’t going to apply as my solution is probably the most trivial one using “randomized DFS”, so there is nothing to show off, but, I wanted to use those tools.</p>
 <p><em>EDIT</em>: eventually, it did apply</p>
-<p><img src="/images/daedalus/maze-100x100.png" alt="100x100">  </p>
+<p><img src="./maze-100x100.png" alt="100x100">    </p>
 <p>Initially solution was building SVG with VirtualDOM. It was very neat as Fable/VirtualDOM uses <a href="http://elm-lang.org/" target="_blank" rel="external">Elm</a> architecture (check Fable <a href="https://fable-compiler.github.io/samples/virtualdom/index.html" target="_blank" rel="external">samples page</a>). It was fast enough to solve the problem but unfortunatelly, for bigger mazes (&gt;50x50), not fast enough for live animation. Changing multiple <code>&lt;rect&gt;</code> to one long multipart <code>&lt;path&gt;</code> made it a little bit faster (~20%) but it still wasn’t good enough and it was definitely slowing down further it went.</p>
 <p>The final version is not as ambitious, uses <a href="https://jquery.com/" target="_blank" rel="external">jQuery</a> and <a href="http://projects.calebevans.me/jcanvas/" target="_blank" rel="external">jCanvas</a>. Presentation layer is very old school, but it works and is very fast (relatively speaking, of course). Note, I could deal with the <code>&lt;canvas&gt;</code> without any supporting libraries, but one of my goals was to investigate and evaluate integration with native JavaScript libraries as, in my opinion, integration is one of the most important aspects of any X-to-JavaScript transpiler.     </p>
 <h2 id="“You’re-very-clever-young-man-very-clever-”-said-the-old-lady-“But-it’s-functions-all-the-way-down-”"><a href="#“You’re-very-clever-young-man-very-clever-”-said-the-old-lady-“But-it’s-functions-all-the-way-down-”" class="headerlink" title="“You’re very clever, young man, very clever,” said the old lady. “But it’s functions all the way down!”"></a>“You’re very clever, young man, very clever,” said the old lady. “But it’s functions all the way down!”</h2><p><a href="https://vimeo.com/113588389" target="_blank" rel="external">Scott Wlaschin</a> says “No abstraction is too small”. I agree, I’m a big fan of “extracting abstraction” and I’m so glad F# supports and encourages local one-liners. I believe problems should be decomposed into small managable chunks first and then composed back into solution. Things should be named appropriately as well. Let me use example given by <a href="https://vimeo.com/97329157" target="_blank" rel="external">Kevlin Henney</a> (it’s actually Dan North’s example but I have no link): </p>
@@ -244,7 +244,7 @@
 <p>From now on, we can forget about JavaScript interop again. We can just use <code>drawBox</code> and implement <code>drawRoom</code> to draw a room, and <code>drawDoor</code> to draw a door: </p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Location -&gt; unit</span></div><div class="line"><span class="keyword">let</span> drawRoom location =</div><div class="line">    <span class="keyword">let</span> x, y = toPixel location <span class="keyword">in</span> drawBox ROOM_COLOR x y ROOM_SIZE ROOM_SIZE</div><div class="line"></div><div class="line"><span class="comment">// Location -&gt; Direction -&gt; unit    </span></div><div class="line"><span class="keyword">let</span> drawDoor location direction =</div><div class="line">    <span class="keyword">let</span> x, y = toPixel location</div><div class="line">    <span class="keyword">match</span> direction <span class="keyword">with</span></div><div class="line">    | North -&gt; drawBox DOOR_COLOR x (y - DOOR_SIZE) ROOM_SIZE DOOR_SIZE</div><div class="line">    | South -&gt; drawBox DOOR_COLOR x (y + ROOM_SIZE) ROOM_SIZE DOOR_SIZE</div><div class="line">    | East -&gt; drawBox DOOR_COLOR (x + ROOM_SIZE) y DOOR_SIZE ROOM_SIZE</div><div class="line">    | West -&gt; drawBox DOOR_COLOR (x - DOOR_SIZE) y DOOR_SIZE ROOM_SIZE</div></pre></td></tr></table></figure>
 <p><code>Room</code> is drawn as big square, while <code>Door</code> is just a slim rectangle (depends on relation between <code>DOOR_SIZE</code> and <code>ROOM_SIZE</code>). As you can see doors have different shape depending on direction (for example: North vs East).</p>
-<p><img src="/images/daedalus/maze-5x5.png" alt="5x5"></p>
+<p><img src="./maze-5x5.png" alt="5x5"></p>
 <p>Now, we need to start traversing the maze:</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="keyword">mutable</span> action = buildMaze WORLD_WIDTH WORLD_HEIGHT |&gt; Enumerator.create</div></pre></td></tr></table></figure>
 <p>You can notice <code>Enumerator</code> here, which might be a little bit cryptic but it just provides slighlty more F#-ish way to use <code>IEnumerable&lt;T&gt;</code> interface. </p>
@@ -267,7 +267,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="citit0a30000138jbn2ro51y8" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="citk83fuu0003fkjbh0w9jn79" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -333,7 +333,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/" data-id="citit0a3b000538jbk4onnrhe" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/" data-id="citk83fv00005fkjb14lk723e" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -423,7 +423,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/" data-id="citit0a37000438jbpdk3w8rb" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/" data-id="citk83fv30007fkjbxz0aqqhj" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -491,7 +491,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/" data-id="citit0a2v000038jbsc5csu0l" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/" data-id="citk83fuj0000fkjbtafg1ve1" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/#disqus_thread" class="article-comment-link">Comments</a>
       

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://red-green-rewrite.github.io/"/>
-  <updated>2016-09-25T15:48:42.954Z</updated>
+  <updated>2016-09-26T15:29:31.379Z</updated>
   <id>http://red-green-rewrite.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/"/>
     <id>http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/</id>
     <published>2016-09-15T14:19:49.000Z</published>
-    <updated>2016-09-25T15:48:42.954Z</updated>
+    <updated>2016-09-26T15:29:31.379Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
 <li><a href="/2016/09/14/Maze-generator-with-Fable/">Previous article</a></li>
@@ -72,17 +72,17 @@
     <link href="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/"/>
     <id>http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/</id>
     <published>2016-09-14T19:53:39.000Z</published>
-    <updated>2016-09-25T15:48:42.951Z</updated>
+    <updated>2016-09-26T17:21:24.583Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
 <li><a href="/2016/09/15/Shaking-maze-generator/">Follow up</a></li>
 <li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code</a></li>
 <li><a href="https://dl.dropboxusercontent.com/u/317815/daedalus/index.html" target="_blank" rel="external">Online demo</a></li>
 </ul>
-<h2 id="Redgate’s-first-ever-coding-challenge"><a href="#Redgate’s-first-ever-coding-challenge" class="headerlink" title="Redgate’s first ever coding challenge"></a>Redgate’s first ever coding challenge</h2><p>For quite some time I was looking for excuse to use <a href="https://fable-compiler.github.io/" target="_blank" rel="external">Fable</a>. Fable is <a href="http://fsharp.org/" target="_blank" rel="external">F#</a> to JavaScript compiler. I generally shy away from JavaScript, as I am biased towards backend but as a big fan of F# I wanted to play a little with Fable (and <a href="https://www.scala-js.org/" target="_blank" rel="external">Scala.js</a> actually). On top of that, I wanted to try some other technologies I’ve never used before: <a href="https://github.com/Matt-Esch/virtual-dom" target="_blank" rel="external">VirtualDom</a> (maybe <a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a>), <a href="https://webpack.github.io/" target="_blank" rel="external">Webpack</a>, <a href="http://www.pixijs.com/" target="_blank" rel="external">Pixi.js</a>. All I needed was an excuse…</p>
+<h2 id="Redgate’s-first-ever-coding-challenge"><a href="#Redgate’s-first-ever-coding-challenge" class="headerlink" title="Redgate’s first ever coding challenge"></a>Redgate’s first ever coding challenge</h2><p>For quite some time I was looking for an excuse to use <a href="https://fable-compiler.github.io/" target="_blank" rel="external">Fable</a>. Fable is <a href="http://fsharp.org/" target="_blank" rel="external">F#</a> to JavaScript compiler. I generally shy away from JavaScript, as I am biased towards backend but as a big fan of F# I wanted to play a little with Fable (and <a href="https://www.scala-js.org/" target="_blank" rel="external">Scala.js</a> actually). On top of that, I wanted to try some other technologies I’ve never used before: <a href="https://github.com/Matt-Esch/virtual-dom" target="_blank" rel="external">VirtualDom</a> (maybe <a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a>), <a href="https://webpack.github.io/" target="_blank" rel="external">Webpack</a>, <a href="http://www.pixijs.com/" target="_blank" rel="external">Pixi.js</a>. All I needed was an excuse…</p>
 <p>I’ve found <a href="http://www.red-gate.com/our-company/entrypage/coding-challenge" target="_blank" rel="external">Redgate’s first ever coding challenge</a> on LinkedIn and I decided to do it with Fable in the browser. The challenge is about writing an application to generate mazes (thus the Daedalus reference). I wasn’t going to apply as my solution is probably the most trivial one using “randomized DFS”, so there is nothing to show off, but, I wanted to use those tools.</p>
 <p><em>EDIT</em>: eventually, it did apply</p>
-<p><img src="/images/daedalus/maze-100x100.png" alt="100x100">  </p>
+<p><img src="./maze-100x100.png" alt="100x100">    </p>
 <p>Initially solution was building SVG with VirtualDOM. It was very neat as Fable/VirtualDOM uses <a href="http://elm-lang.org/" target="_blank" rel="external">Elm</a> architecture (check Fable <a href="https://fable-compiler.github.io/samples/virtualdom/index.html" target="_blank" rel="external">samples page</a>). It was fast enough to solve the problem but unfortunatelly, for bigger mazes (&gt;50x50), not fast enough for live animation. Changing multiple <code>&lt;rect&gt;</code> to one long multipart <code>&lt;path&gt;</code> made it a little bit faster (~20%) but it still wasn’t good enough and it was definitely slowing down further it went.</p>
 <p>The final version is not as ambitious, uses <a href="https://jquery.com/" target="_blank" rel="external">jQuery</a> and <a href="http://projects.calebevans.me/jcanvas/" target="_blank" rel="external">jCanvas</a>. Presentation layer is very old school, but it works and is very fast (relatively speaking, of course). Note, I could deal with the <code>&lt;canvas&gt;</code> without any supporting libraries, but one of my goals was to investigate and evaluate integration with native JavaScript libraries as, in my opinion, integration is one of the most important aspects of any X-to-JavaScript transpiler.     </p>
 <h2 id="“You’re-very-clever-young-man-very-clever-”-said-the-old-lady-“But-it’s-functions-all-the-way-down-”"><a href="#“You’re-very-clever-young-man-very-clever-”-said-the-old-lady-“But-it’s-functions-all-the-way-down-”" class="headerlink" title="“You’re very clever, young man, very clever,” said the old lady. “But it’s functions all the way down!”"></a>“You’re very clever, young man, very clever,” said the old lady. “But it’s functions all the way down!”</h2><p><a href="https://vimeo.com/113588389" target="_blank" rel="external">Scott Wlaschin</a> says “No abstraction is too small”. I agree, I’m a big fan of “extracting abstraction” and I’m so glad F# supports and encourages local one-liners. I believe problems should be decomposed into small managable chunks first and then composed back into solution. Things should be named appropriately as well. Let me use example given by <a href="https://vimeo.com/97329157" target="_blank" rel="external">Kevlin Henney</a> (it’s actually Dan North’s example but I have no link): </p>
@@ -166,7 +166,7 @@
 <p>From now on, we can forget about JavaScript interop again. We can just use <code>drawBox</code> and implement <code>drawRoom</code> to draw a room, and <code>drawDoor</code> to draw a door: </p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Location -&gt; unit</span></div><div class="line"><span class="keyword">let</span> drawRoom location =</div><div class="line">    <span class="keyword">let</span> x, y = toPixel location <span class="keyword">in</span> drawBox ROOM_COLOR x y ROOM_SIZE ROOM_SIZE</div><div class="line"></div><div class="line"><span class="comment">// Location -&gt; Direction -&gt; unit    </span></div><div class="line"><span class="keyword">let</span> drawDoor location direction =</div><div class="line">    <span class="keyword">let</span> x, y = toPixel location</div><div class="line">    <span class="keyword">match</span> direction <span class="keyword">with</span></div><div class="line">    | North -&gt; drawBox DOOR_COLOR x (y - DOOR_SIZE) ROOM_SIZE DOOR_SIZE</div><div class="line">    | South -&gt; drawBox DOOR_COLOR x (y + ROOM_SIZE) ROOM_SIZE DOOR_SIZE</div><div class="line">    | East -&gt; drawBox DOOR_COLOR (x + ROOM_SIZE) y DOOR_SIZE ROOM_SIZE</div><div class="line">    | West -&gt; drawBox DOOR_COLOR (x - DOOR_SIZE) y DOOR_SIZE ROOM_SIZE</div></pre></td></tr></table></figure>
 <p><code>Room</code> is drawn as big square, while <code>Door</code> is just a slim rectangle (depends on relation between <code>DOOR_SIZE</code> and <code>ROOM_SIZE</code>). As you can see doors have different shape depending on direction (for example: North vs East).</p>
-<p><img src="/images/daedalus/maze-5x5.png" alt="5x5"></p>
+<p><img src="./maze-5x5.png" alt="5x5"></p>
 <p>Now, we need to start traversing the maze:</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="keyword">mutable</span> action = buildMaze WORLD_WIDTH WORLD_HEIGHT |&gt; Enumerator.create</div></pre></td></tr></table></figure>
 <p>You can notice <code>Enumerator</code> here, which might be a little bit cryptic but it just provides slighlty more F#-ish way to use <code>IEnumerable&lt;T&gt;</code> interface. </p>
@@ -210,7 +210,7 @@
     <link href="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/"/>
     <id>http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/</id>
     <published>2016-09-14T17:47:16.000Z</published>
-    <updated>2016-09-25T15:48:42.965Z</updated>
+    <updated>2016-09-26T15:29:31.383Z</updated>
     
     <content type="html"><![CDATA[<p>Originally, this blogpost was titled “Use apply and carry on”, but I guess naming the function <code>apply</code> after <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/apply.html" target="_blank" rel="external">Kotlin</a> (damn you, Kotlin!) wasn’t the most preferred option by the public. I did like <code>apple |&gt; apply eat</code> semantics but if Scott Wlaschin says <code>apply</code> is a <a href="https://fsharpforfunandprofit.com/posts/elevated-world/#apply" target="_blank" rel="external">different thing</a> then it is a different thing. To be precise Scott’s is <code>apply: (a -&gt; b) -&gt; a -&gt; b</code> and mine <em>was</em> (emphasize on was) <code>apply: (a -&gt; unit) -&gt; a -&gt; a</code>. Apparently, the function which does whatever I wanted <code>apply</code> to do is called <code>tee</code> (<a href="https://fsharpforfunandprofit.com/posts/recipe-part2/" target="_blank" rel="external">after Unix command</a>) or <code>tap</code> (at least in <a href="https://ruby-doc.org/core-2.2.3/Object.html#method-i-tap" target="_blank" rel="external">Ruby</a> and <a href="http://ramdajs.com/docs/#tap" target="_blank" rel="external">Ramda.js</a>).</p>
 <p>So I’ve edited it and replaced <code>apply</code> with <code>tee</code>, but essentially it is almost unchanged… Let’s go then.</p>
@@ -256,7 +256,7 @@
     <link href="http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/"/>
     <id>http://red-green-rewrite.github.io/2016/06/27/State-Machine-Construction-Kit-for-F/</id>
     <published>2016-06-27T00:46:03.000Z</published>
-    <updated>2016-09-25T15:48:42.958Z</updated>
+    <updated>2016-09-26T15:29:31.383Z</updated>
     
     <content type="html"><![CDATA[<p><strong>NOTE</strong>: There is a lot of code in this article, as it is repeated and iteratively added. The final version is just 28 lines near the end, but I think you should read the whole thing anyway.</p>
 <p>Once upon the time I needed to implement state machine. To not reinvent the wheel I reviewed what’s available: <a href="http://msdn.microsoft.com/en-gb/vstudio/jj684582.aspx" target="_blank" rel="external">Windows Workflow Foundation</a>, <a href="https://github.com/appccelerate/statemachine" target="_blank" rel="external">Appccelerate.StateMachine</a>, <a href="https://code.google.com/p/bbvcommon/wiki/StateMachineTutorial" target="_blank" rel="external">bbv.Common.StateMachine</a>, <a href="https://github.com/nblumhardt/stateless" target="_blank" rel="external">Stateless</a>, <a href="http://simplestatemachine.codeplex.com" target="_blank" rel="external">SimpleStateMachine</a>, <a href="https://code.google.com/p/solid-state" target="_blank" rel="external">Solid.State</a>, and <a href="https://github.com/OmerMor/StateMachineToolkit/tree/master/src/StateMachineToolkit" target="_blank" rel="external">StateMachineToolkit</a>. Windows Workflow Foundation was just scary, apart from the fact that State Machine is not available in .NET 4.0. It didn’t look lightweight either.</p>
@@ -328,7 +328,7 @@
     <link href="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/"/>
     <id>http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/</id>
     <published>2016-05-17T15:44:09.000Z</published>
-    <updated>2016-09-25T15:48:42.947Z</updated>
+    <updated>2016-09-26T15:29:31.373Z</updated>
     
     <content type="html"><![CDATA[<p>I was doing some katas on <a href="http://www.codewars.com/" target="_blank" rel="external">CodeWars</a> recently, and some of them were involving <a href="https://en.wikipedia.org/wiki/Square_number" target="_blank" rel="external">perfect square numbers</a>. In short, perfect square number is an integer which square root is also an integer, like 9, 16, 25, and 36.</p>
 <p>Anyway, solutions which got most votes in both categories, <em>best practice</em> and <em>clever</em> use:</p>
