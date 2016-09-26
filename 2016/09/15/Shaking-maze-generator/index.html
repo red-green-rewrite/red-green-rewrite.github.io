@@ -23,7 +23,7 @@ Online demo
 
 NoteThis blogpost requires familiarity with previous one.
 Low branching factorOne of the disadvantages of using DFS to build mazes is “low branchi">
-<meta property="og:updated_time" content="2016-09-26T15:29:31.379Z">
+<meta property="og:updated_time" content="2016-09-26T17:40:31.304Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shaking maze generator">
 <meta name="twitter:description" content="Quick links
@@ -110,7 +110,7 @@ Low branching factorOne of the disadvantages of using DFS to build mazes is “l
         <h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
 <li><a href="/2016/09/14/Maze-generator-with-Fable/">Previous article</a></li>
 <li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code</a></li>
-<li><a href="https://dl.dropboxusercontent.com/u/317815/daedalus/index.html" target="_blank" rel="external">Online demo</a></li>
+<li><a href="/fable-daedalus/index.html">Online demo</a></li>
 </ul>
 <h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p>This blogpost requires familiarity with <a href="/2016/09/14/Maze-generator-with-Fable/">previous one</a>.</p>
 <h2 id="Low-branching-factor"><a href="#Low-branching-factor" class="headerlink" title="Low branching factor"></a>Low branching factor</h2><p>One of the disadvantages of using DFS to build mazes is “low branching factor”. The problem is that it actually runs for long time before hitting dead-end and having to backtrack, so it creates very long corridors with no room to “make the wrong turn” for potential maze explorer.<br>Let’s deal with it.</p>
@@ -130,7 +130,7 @@ Low branching factorOne of the disadvantages of using DFS to build mazes is “l
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> shake stack = </div><div class="line">    <span class="keyword">if</span> Random.random () &gt; <span class="number">0.01</span> <span class="keyword">then</span> stack</div><div class="line">    <span class="keyword">else</span> stack |&gt; Array.ofList |&gt; apply Array.shuffleInPlace |&gt; Array.toList</div></pre></td></tr></table></figure>
 <p>Which in 99% of cases returns <code>stack</code> unmodified but from time to time shuffles it completely. Of course, it would be nice to use it now (<code>id</code> gets replaced by <code>shake</code>):</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </div><div class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle) shake</div></pre></td></tr></table></figure>
-<p>Please note, that from algorithm complexity point of view this is not good approach, as complexity just jumped from <strong>O(N)</strong> to <strong>O(N^2)</strong> (it’s a little but more complicated than that), but definitely it gives <a href="https://dl.dropboxusercontent.com/u/317815/daedalus/index.html" target="_blank" rel="external">better results</a>.</p>
+<p>Please note, that from algorithm complexity point of view this is not good approach, as complexity just jumped from <strong>O(N)</strong> to <strong>O(N^2)</strong> (it’s a little but more complicated than that), but definitely it gives <a href="/fable-daedalus/index.html">better results</a>.</p>
 <p>The bottom line is that I did not really modify the algorithm (<em>DFS</em>) I just injected some extra behavior into it, but it is totally externally controlled (kind of definition of “injected”, right?). Functional composition rlz.</p>
 
       
