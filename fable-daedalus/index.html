@@ -1,0 +1,43 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <title>Daedalus</title>
+</head>
+
+<body>
+    <div id="main">
+        <div class="container">
+            <div class="row content">
+                <button id="restart" type="button" class="btn">Restart</button>
+            </div>
+            <div class="row content">
+                <div class="col-sm-6" style="text-align: center">
+                    <figure>
+                        <canvas id="canvasA" class="maze"></canvas>
+                        <figcaption id="captionA">
+                            randomized DFS<br>
+                            (backtracks if blocked, but usually pushes forward)
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-sm-6" style="text-align: center">
+                    <figure>
+                        <canvas id="canvasB" class="maze"></canvas>
+                        <figcaption id="captionB">
+                            Randomized DFS with stack shaking<br>
+                            (you can notice it "teleporting" back and restarting<br>
+                            from already visited location erraticly)
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="bundle.js"></script>
+</body>
+
+</html>
