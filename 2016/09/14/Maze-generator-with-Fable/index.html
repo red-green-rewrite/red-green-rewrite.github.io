@@ -6,32 +6,38 @@
   <title>Maze generator with Fable | Red, Green, Rewrite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Quick links
-Follow up
-Source code
-Online demo
-
-Redgate’s first ever coding challengeFor quite some time I was looking for an excuse to use Fable. Fable is F# to JavaScript compiler. I generally shy aw">
+Randomized depth-first search
+Randomized depth-first search with stack shaking
+Source code (DFS)
+Online demo (DFS)
+Random spanning tree with Prim’s algorithm
+Source code (Prim’s)
+Online de">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maze generator with Fable">
 <meta property="og:url" content="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/index.html">
 <meta property="og:site_name" content="Red, Green, Rewrite">
 <meta property="og:description" content="Quick links
-Follow up
-Source code
-Online demo
-
-Redgate’s first ever coding challengeFor quite some time I was looking for an excuse to use Fable. Fable is F# to JavaScript compiler. I generally shy aw">
+Randomized depth-first search
+Randomized depth-first search with stack shaking
+Source code (DFS)
+Online demo (DFS)
+Random spanning tree with Prim’s algorithm
+Source code (Prim’s)
+Online de">
 <meta property="og:image" content="http://red-green-rewrite.github.io/./maze-100x100.png">
 <meta property="og:image" content="http://red-green-rewrite.github.io/./maze-5x5.png">
-<meta property="og:updated_time" content="2016-09-26T17:41:09.213Z">
+<meta property="og:updated_time" content="2016-09-26T23:39:50.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maze generator with Fable">
 <meta name="twitter:description" content="Quick links
-Follow up
-Source code
-Online demo
-
-Redgate’s first ever coding challengeFor quite some time I was looking for an excuse to use Fable. Fable is F# to JavaScript compiler. I generally shy aw">
+Randomized depth-first search
+Randomized depth-first search with stack shaking
+Source code (DFS)
+Online demo (DFS)
+Random spanning tree with Prim’s algorithm
+Source code (Prim’s)
+Online de">
 <meta name="twitter:image" content="http://red-green-rewrite.github.io/./maze-100x100.png">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
@@ -108,9 +114,13 @@ Redgate’s first ever coding challengeFor quite some time I was looking for an 
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
-<li><a href="/2016/09/15/Shaking-maze-generator/">Follow up</a></li>
-<li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code</a></li>
-<li><a href="/fable-daedalus/index.html">Online demo</a></li>
+<li><a href="/2016/09/14/Maze-generator-with-Fable/">Randomized depth-first search</a></li>
+<li><a href="/2016/09/15/Shaking-maze-generator/">Randomized depth-first search with stack shaking</a></li>
+<li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code (DFS)</a></li>
+<li><a href="/fable-daedalus/index.html">Online demo (DFS)</a></li>
+<li><a href="/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/">Random spanning tree with Prim’s algorithm</a></li>
+<li><a href="https://github.com/MiloszKrajewski/scalajs-mazigeen" target="_blank" rel="external">Source code (Prim’s)</a></li>
+<li><a href="/scalajs-mazigeen/index.html">Online demo (Prim’s)</a></li>
 </ul>
 <h2 id="Redgate’s-first-ever-coding-challenge"><a href="#Redgate’s-first-ever-coding-challenge" class="headerlink" title="Redgate’s first ever coding challenge"></a>Redgate’s first ever coding challenge</h2><p>For quite some time I was looking for an excuse to use <a href="https://fable-compiler.github.io/" target="_blank" rel="external">Fable</a>. Fable is <a href="http://fsharp.org/" target="_blank" rel="external">F#</a> to JavaScript compiler. I generally shy away from JavaScript, as I am biased towards backend but as a big fan of F# I wanted to play a little with Fable (and <a href="https://www.scala-js.org/" target="_blank" rel="external">Scala.js</a> actually). On top of that, I wanted to try some other technologies I’ve never used before: <a href="https://github.com/Matt-Esch/virtual-dom" target="_blank" rel="external">VirtualDom</a> (maybe <a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a>), <a href="https://webpack.github.io/" target="_blank" rel="external">Webpack</a>, <a href="http://www.pixijs.com/" target="_blank" rel="external">Pixi.js</a>. All I needed was an excuse…</p>
 <p>I’ve found <a href="http://www.red-gate.com/our-company/entrypage/coding-challenge" target="_blank" rel="external">Redgate’s first ever coding challenge</a> on LinkedIn and I decided to do it with Fable in the browser. The challenge is about writing an application to generate mazes (thus the Daedalus reference). I wasn’t going to apply as my solution is probably the most trivial one using “randomized DFS”, so there is nothing to show off, but, I wanted to use those tools.</p>
@@ -222,12 +232,12 @@ Redgate’s first ever coding challengeFor quite some time I was looking for an 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="citk83fuu0003fkjbh0w9jn79" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="citklklqb0003fsjbla5aqdgc" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fable/">fable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fable/">fable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maze/">maze</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
 
     </footer>
   </div>
@@ -272,7 +282,7 @@ Redgate’s first ever coding challengeFor quite some time I was looking for an 
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maze/">maze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala-js/">scala.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
     </div>
   </div>
 
@@ -282,7 +292,7 @@ Redgate’s first ever coding challengeFor quite some time I was looking for an 
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/fable/" style="font-size: 15px;">fable</a> <a href="/tags/fsharp/" style="font-size: 20px;">fsharp</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a>
+      <a href="/tags/algorithm/" style="font-size: 16.67px;">algorithm</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/fable/" style="font-size: 13.33px;">fable</a> <a href="/tags/fsharp/" style="font-size: 20px;">fsharp</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/maze/" style="font-size: 16.67px;">maze</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/scala-js/" style="font-size: 10px;">scala.js</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/webpack/" style="font-size: 16.67px;">webpack</a>
     </div>
   </div>
 
@@ -304,6 +314,10 @@ Redgate’s first ever coding challengeFor quite some time I was looking for an 
       <ul>
         
           <li>
+            <a href="/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/">Maze generator again this time with Scala.js</a>
+          </li>
+        
+          <li>
             <a href="/2016/09/15/Shaking-maze-generator/">Shaking maze generator</a>
           </li>
         
@@ -317,10 +331,6 @@ Redgate’s first ever coding challengeFor quite some time I was looking for an 
         
           <li>
             <a href="/2016/06/27/State-Machine-Construction-Kit-for-F/">State Machine Construction Kit for F#</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/17/A-perfect-square-kata/">A perfect square kata</a>
           </li>
         
       </ul>
