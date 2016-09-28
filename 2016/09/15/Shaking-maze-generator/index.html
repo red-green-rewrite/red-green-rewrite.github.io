@@ -25,8 +25,8 @@ Online demo (DFS)
 Random spanning tree with Prim’s algorithm
 Source code (Prim’s)
 Online de">
-<meta property="og:image" content="http://red-green-rewrite.github.io/maze-2x100x100.png">
-<meta property="og:updated_time" content="2016-09-28T22:51:05.086Z">
+<meta property="og:image" content="http://red-green-rewrite.github.io/images/maze/maze-2x100x100.png">
+<meta property="og:updated_time" content="2016-09-28T23:00:11.244Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shaking maze generator">
 <meta name="twitter:description" content="Quick links
@@ -37,7 +37,7 @@ Online demo (DFS)
 Random spanning tree with Prim’s algorithm
 Source code (Prim’s)
 Online de">
-<meta name="twitter:image" content="http://red-green-rewrite.github.io/maze-2x100x100.png">
+<meta name="twitter:image" content="http://red-green-rewrite.github.io/images/maze/maze-2x100x100.png">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
   
@@ -140,7 +140,7 @@ Online de">
 <p>Which in 99% of cases returns <code>stack</code> unmodified but from time to time shuffles it completely. Of course, it would be nice to use it now (<code>id</code> gets replaced by <code>shake</code>):</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </div><div class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle) shake</div></pre></td></tr></table></figure>
 <p>Please note, that from algorithm complexity point of view this is not good approach, as complexity just jumped from <strong>O(N)</strong> to <strong>O(N^2)</strong> (it’s a little but more complicated than that), but definitely it gives <a href="/fable-daedalus/index.html">better results</a>, as it tries to branch earlier.</p>
-<p><img src="maze-2x100x100.png" alt="Branching earlier on the right"></p>
+<p><img src="/images/maze/maze-2x100x100.png" alt="Pushing forward on the left, branching early on the right"></p>
 <p>The bottom line is that I did not really modify the algorithm (<em>DFS</em>) I just injected some extra behavior into it, but it is totally externally controlled (kind of definition of “injected”, right?). Functional composition rlz.</p>
 
       
