@@ -25,7 +25,8 @@ Online demo (DFS)
 Random spanning tree with Prim’s algorithm
 Source code (Prim’s)
 Online de">
-<meta property="og:updated_time" content="2016-09-26T23:39:50.900Z">
+<meta property="og:image" content="http://red-green-rewrite.github.io/maze-2x100x100.png">
+<meta property="og:updated_time" content="2016-09-28T16:50:52.959Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shaking maze generator">
 <meta name="twitter:description" content="Quick links
@@ -36,6 +37,7 @@ Online demo (DFS)
 Random spanning tree with Prim’s algorithm
 Source code (Prim’s)
 Online de">
+<meta name="twitter:image" content="http://red-green-rewrite.github.io/maze-2x100x100.png">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
   
@@ -137,13 +139,14 @@ Online de">
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> shake stack = </div><div class="line">    <span class="keyword">if</span> Random.random () &gt; <span class="number">0.01</span> <span class="keyword">then</span> stack</div><div class="line">    <span class="keyword">else</span> stack |&gt; Array.ofList |&gt; apply Array.shuffleInPlace |&gt; Array.toList</div></pre></td></tr></table></figure>
 <p>Which in 99% of cases returns <code>stack</code> unmodified but from time to time shuffles it completely. Of course, it would be nice to use it now (<code>id</code> gets replaced by <code>shake</code>):</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </div><div class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle) shake</div></pre></td></tr></table></figure>
-<p>Please note, that from algorithm complexity point of view this is not good approach, as complexity just jumped from <strong>O(N)</strong> to <strong>O(N^2)</strong> (it’s a little but more complicated than that), but definitely it gives <a href="/fable-daedalus/index.html">better results</a>.</p>
+<p>Please note, that from algorithm complexity point of view this is not good approach, as complexity just jumped from <strong>O(N)</strong> to <strong>O(N^2)</strong> (it’s a little but more complicated than that), but definitely it gives <a href="/fable-daedalus/index.html">better results</a>, as it tries to branch earlier.</p>
+<p><img src="maze-2x100x100.png" alt="Branching earlier on the right"></p>
 <p>The bottom line is that I did not really modify the algorithm (<em>DFS</em>) I just injected some extra behavior into it, but it is totally externally controlled (kind of definition of “injected”, right?). Functional composition rlz.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" data-id="citklklqf0004fsjbucwx073j" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" data-id="cit4febic0003jsjwz2bmpexk" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/#disqus_thread" class="article-comment-link">Comments</a>
       
