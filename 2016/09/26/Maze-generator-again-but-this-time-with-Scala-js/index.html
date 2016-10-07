@@ -8,11 +8,10 @@
   <meta name="description" content="Quick links
 Randomized depth-first search
 Randomized depth-first search with stack shaking
-Source code (DFS)
-Online demo (DFS)
 Random spanning tree with Prim’s algorithm
-Source code (Prim’s)
-Online de">
+Random spanning tree using Kruskal’s algorithm
+Source code
+Online">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maze generator again this time with Scala.js">
 <meta property="og:url" content="http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/index.html">
@@ -20,22 +19,20 @@ Online de">
 <meta property="og:description" content="Quick links
 Randomized depth-first search
 Randomized depth-first search with stack shaking
-Source code (DFS)
-Online demo (DFS)
 Random spanning tree with Prim’s algorithm
-Source code (Prim’s)
-Online de">
-<meta property="og:updated_time" content="2016-09-29T23:02:59.572Z">
+Random spanning tree using Kruskal’s algorithm
+Source code
+Online">
+<meta property="og:updated_time" content="2016-10-07T23:31:59.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maze generator again this time with Scala.js">
 <meta name="twitter:description" content="Quick links
 Randomized depth-first search
 Randomized depth-first search with stack shaking
-Source code (DFS)
-Online demo (DFS)
 Random spanning tree with Prim’s algorithm
-Source code (Prim’s)
-Online de">
+Random spanning tree using Kruskal’s algorithm
+Source code
+Online">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
   
@@ -113,11 +110,10 @@ Online de">
         <h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
 <li><a href="/2016/09/14/Maze-generator-with-Fable/">Randomized depth-first search</a></li>
 <li><a href="/2016/09/15/Shaking-maze-generator/">Randomized depth-first search with stack shaking</a></li>
-<li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code (DFS)</a></li>
-<li><a href="/fable-daedalus/index.html">Online demo (DFS)</a></li>
 <li><a href="/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/">Random spanning tree with Prim’s algorithm</a></li>
-<li><a href="https://github.com/MiloszKrajewski/scalajs-mazigeen" target="_blank" rel="external">Source code (Prim’s)</a></li>
-<li><a href="/scalajs-mazigeen/index.html">Online demo (Prim’s)</a></li>
+<li><a href="/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/">Random spanning tree using Kruskal’s algorithm</a></li>
+<li><a href="https://github.com/MiloszKrajewski/scalajs-mazigeen" target="_blank" rel="external">Source code</a></li>
+<li><a href="/scalajs-mazigeen/index.html">Online demo</a></li>
 </ul>
 <h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>So last week I was doing <a href="/2016/09/14/Maze-generator-with-Fable/">maze generator using randomizes depth first search</a> with <a href="https://fable-compiler.github.io/" target="_blank" rel="external">Fable</a>. Then, to increase “branching factor” I’ve added <a href="/2016/09/15/Shaking-maze-generator/">stack shaking</a>. Today it’s time for slightly different approach.</p>
 <p>As I said before this task was just kind of excuse technologies which I never used before. So far, I managed to scratch the surface of <a href="/2016/09/14/Maze-generator-with-Fable/">Fable</a>, <a href="https://webpack.github.io/" target="_blank" rel="external">Webpack</a> and <a href="https://github.com/Matt-Esch/virtual-dom" target="_blank" rel="external">VirtualDOM</a>. For performance reasons VirtualDOM got replaced by <a href="http://projects.calebevans.me/jcanvas/" target="_blank" rel="external">jCanvas</a>.</p>
@@ -190,12 +186,12 @@ Online de">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/" data-id="citt9ktkd00013ojbu4y6pnr6" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/" data-id="cityqq8kk0001msjb1azf9lml" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maze/">maze</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scala/">scala</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scala-js/">scala.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maze/">maze</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scala/">scala</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scala-js/">scala.js</a></li></ul>
 
     </footer>
   </div>
@@ -240,7 +236,7 @@ Online de">
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin/">kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maze/">maze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala-js/">scala.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin/">kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin-js/">kotlin.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maze/">maze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala-js/">scala.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a></li></ul>
     </div>
   </div>
 
@@ -250,7 +246,7 @@ Online de">
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm/" style="font-size: 17.5px;">algorithm</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/fable/" style="font-size: 12.5px;">fable</a> <a href="/tags/fsharp/" style="font-size: 20px;">fsharp</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/kotlin/" style="font-size: 10px;">kotlin</a> <a href="/tags/maze/" style="font-size: 15px;">maze</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/scala-js/" style="font-size: 10px;">scala.js</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a>
+      <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/fable/" style="font-size: 13.33px;">fable</a> <a href="/tags/fsharp/" style="font-size: 20px;">fsharp</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/kotlin/" style="font-size: 13.33px;">kotlin</a> <a href="/tags/kotlin-js/" style="font-size: 10px;">kotlin.js</a> <a href="/tags/maze/" style="font-size: 16.67px;">maze</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/scala-js/" style="font-size: 10px;">scala.js</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
     </div>
   </div>
 
@@ -259,7 +255,7 @@ Online de">
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
     </div>
   </div>
 
@@ -270,6 +266,10 @@ Online de">
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/">Kruskal, Kotlin, and Hex Tiles</a>
+          </li>
         
           <li>
             <a href="/2016/09/30/Curious-case-of-disjoint-set/">Curious case of disjoint-set</a>
@@ -285,10 +285,6 @@ Online de">
         
           <li>
             <a href="/2016/09/14/Maze-generator-with-Fable/">Maze generator with Fable</a>
-          </li>
-        
-          <li>
-            <a href="/2016/09/14/Use-apply-and-carry-on/">Use tee and carry on</a>
           </li>
         
       </ul>
