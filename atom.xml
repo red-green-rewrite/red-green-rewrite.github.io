@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://red-green-rewrite.github.io/"/>
-  <updated>2016-10-31T02:08:38.707Z</updated>
+  <updated>2016-10-08T09:39:33.306Z</updated>
   <id>http://red-green-rewrite.github.io/</id>
   
   <author>
@@ -104,7 +104,7 @@
     <link href="http://red-green-rewrite.github.io/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/"/>
     <id>http://red-green-rewrite.github.io/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/</id>
     <published>2016-10-06T19:53:50.000Z</published>
-    <updated>2016-10-30T17:58:21.319Z</updated>
+    <updated>2016-10-08T09:39:33.306Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
 <li><a href="/2016/09/14/Maze-generator-with-Fable/">Randomized depth-first search</a></li>
