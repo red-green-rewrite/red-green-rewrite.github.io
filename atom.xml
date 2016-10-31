@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://red-green-rewrite.github.io/"/>
-  <updated>2016-10-08T09:39:33.306Z</updated>
+  <updated>2016-10-31T02:08:38.707Z</updated>
   <id>http://red-green-rewrite.github.io/</id>
   
   <author>
@@ -104,13 +104,14 @@
     <link href="http://red-green-rewrite.github.io/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/"/>
     <id>http://red-green-rewrite.github.io/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/</id>
     <published>2016-10-06T19:53:50.000Z</published>
-    <updated>2016-10-08T09:39:33.306Z</updated>
+    <updated>2016-10-31T03:11:52.786Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
 <li><a href="/2016/09/14/Maze-generator-with-Fable/">Randomized depth-first search</a></li>
 <li><a href="/2016/09/15/Shaking-maze-generator/">Randomized depth-first search with stack shaking</a></li>
 <li><a href="/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/">Random spanning tree with Prim’s algorithm</a></li>
 <li><a href="/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/">Random spanning tree using Kruskal’s algorithm</a></li>
+<li><a href="/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/">Hybrid of depth-first search and Kruskal’s algorithm</a></li>
 <li><a href="https://github.com/MiloszKrajewski/kotlinjs-hexagen" target="_blank" rel="external">Source code</a></li>
 <li><a href="/kotlinjs-hexagen/index.html">Online demo</a></li>
 </ul>
@@ -282,13 +283,14 @@
     <link href="http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/"/>
     <id>http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/</id>
     <published>2016-09-26T18:44:57.000Z</published>
-    <updated>2016-10-07T23:46:35.199Z</updated>
+    <updated>2016-10-31T03:11:52.786Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
 <li><a href="/2016/09/14/Maze-generator-with-Fable/">Randomized depth-first search</a></li>
 <li><a href="/2016/09/15/Shaking-maze-generator/">Randomized depth-first search with stack shaking</a></li>
 <li><a href="/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/">Random spanning tree with Prim’s algorithm</a></li>
 <li><a href="/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/">Random spanning tree using Kruskal’s algorithm</a></li>
+<li><a href="/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/">Hybrid of depth-first search and Kruskal’s algorithm</a></li>
 <li><a href="https://github.com/MiloszKrajewski/scalajs-mazigeen" target="_blank" rel="external">Source code</a></li>
 <li><a href="/scalajs-mazigeen/index.html">Online demo</a></li>
 </ul>
@@ -384,13 +386,14 @@
     <link href="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/"/>
     <id>http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/</id>
     <published>2016-09-15T14:19:49.000Z</published>
-    <updated>2016-10-07T23:46:35.207Z</updated>
+    <updated>2016-10-31T03:11:52.786Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
 <li><a href="/2016/09/14/Maze-generator-with-Fable/">Randomized depth-first search</a></li>
 <li><a href="/2016/09/15/Shaking-maze-generator/">Randomized depth-first search with stack shaking</a></li>
 <li><a href="/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/">Random spanning tree with Prim’s algorithm</a></li>
 <li><a href="/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/">Random spanning tree using Kruskal’s algorithm</a></li>
+<li><a href="/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/">Hybrid of depth-first search and Kruskal’s algorithm</a></li>
 <li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code</a></li>
 <li><a href="/fable-daedalus/index.html">Online demo</a></li>
 </ul>
@@ -440,13 +443,14 @@
     <link href="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/"/>
     <id>http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/</id>
     <published>2016-09-14T19:53:39.000Z</published>
-    <updated>2016-10-07T23:46:35.204Z</updated>
+    <updated>2016-10-31T03:11:52.787Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Quick-links"><a href="#Quick-links" class="headerlink" title="Quick links"></a>Quick links</h2><ul>
 <li><a href="/2016/09/14/Maze-generator-with-Fable/">Randomized depth-first search</a></li>
 <li><a href="/2016/09/15/Shaking-maze-generator/">Randomized depth-first search with stack shaking</a></li>
 <li><a href="/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/">Random spanning tree with Prim’s algorithm</a></li>
 <li><a href="/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/">Random spanning tree using Kruskal’s algorithm</a></li>
+<li><a href="/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/">Hybrid of depth-first search and Kruskal’s algorithm</a></li>
 <li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code</a></li>
 <li><a href="/fable-daedalus/index.html">Online demo</a></li>
 </ul>

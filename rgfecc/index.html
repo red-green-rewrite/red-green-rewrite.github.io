@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+  <link data-require="bootstrap@3.3.6" data-semver="3.3.6" rel="stylesheet" href="bootstrap" />
+  <script data-require="bootstrap@3.3.6" data-semver="3.3.6" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Maze generation is just an excuse</h1>
+      <p>
+        ...or how to try 10 different tools you never used before
+      </p>
+    </div>
+    
+    <p><strong>NOTE:</strong> You may see this submission twice, as I submitted before but it was linking to first blog-post only. Now it is a little bit more.</p>
+
+    <p>Initially I just wanted an excuse to use Fable, Webpack, Node, Jade, Virtual DOM, React, and... everything. In general, to use all the tools I would like to try and have small chance to use in my day-job.</p>
+
+    <p>So I implemented maze generator using DFS in <a href="http://fable.io/">Fable</a>. It was generating SVG using <a href="https://github.com/Matt-Esch/virtual-dom">VirtualDOM</a>. Everything was packaged with <a href="https://webpack.github.io/">Webpack</a>.
+      The performance wasn't good, so I switched to <a href="http://projects.calebevans.me/jcanvas/">jCanvas</a>.
+    </p>
+    <p>Never used Fable before... check. Never used VirtualDOM before... check. Never used Webpack before... check. Never used jCanvas before... check. Cool.</p>
+
+    <p>It was supposed to be it, but I actually found it quite interesting to explore this X-to-JavaScript transpilers. So I also tried <a href="https://www.scala-js.org/">Scala.js</a> and <a href="https://kotlinlang.org/">Kotlin</a>. I also decided to use different algorithm per language.</p>
+
+    <p>I do understand that some of the competitors might have implemented multidimensional, infinite, fractal mazes, so my solutions can be quite humble, but what I wanted to achive was to evaluate those transpilers and I did. From this perspective mission has been acomplished. I also read a tweet recently that (quoting from memory) "coding challenges help find people with no family or day-job". I have both, so my resources were quite limited.</p>
+
+    <p>So here comes the list:
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Language</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>F#/Fable</td>
+            <td>
+              <strong>Depth-First Search</strong><br>
+              <a href="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" class="btn btn-primary btn-sm">Blog post</a>
+              <a href="http://red-green-rewrite.github.io/fable-daedalus/index.html" class="btn btn-primary btn-sm">Online demo</a>
+              <a href="https://github.com/MiloszKrajewski/fable-daedalus" class="btn btn-primary btn-sm">Source code</a>
+            </td>
+          </tr>
+          <tr>
+            <td>F#/Fable</td>
+            <td>
+              <strong>Depth-First Search with stack shaking</strong><br>
+              <span class="small">Attempt to address low branching factor. Works, but increases algorithm complexity from O(n) to O(n^2).</span><br>
+              <a href="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" class="btn btn-primary btn-sm">Blog post</a>
+              <a href="http://red-green-rewrite.github.io/fable-daedalus/index.html" class="btn btn-primary btn-sm">Online demo</a>
+              <a href="https://github.com/MiloszKrajewski/fable-daedalus" class="btn btn-primary btn-sm">Source code</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Scala.js</td>
+            <td>
+              <strong>Prim's algorithm</strong><br>
+              <a href="http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/" class="btn btn-primary btn-sm">Blog post</a>
+              <a href="http://red-green-rewrite.github.io/scalajs-mazigeen/index.html" class="btn btn-primary btn-sm">Online demo</a>
+              <a href="https://github.com/MiloszKrajewski/scalajs-mazigeen" class="btn btn-primary btn-sm">Source code</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Kotlin</td>
+            <td>
+              <strong>Kruskal's algorithm</strong><br>
+              <span class="small">Changed presentation to haxagonal tiles.</span><br>
+              <a href="http://red-green-rewrite.github.io/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/" class="btn btn-primary btn-sm">Blog post</a>
+              <a href="http://red-green-rewrite.github.io/kotlinjs-hexagen/index.html" class="btn btn-primary btn-sm">Online demo</a>
+              <a href="https://github.com/MiloszKrajewski/kotlinjs-hexagen" class="btn btn-primary btn-sm">Source code</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Kotlin</td>
+            <td>
+              <strong>Hybrid combining Depth-First Search and Kruskal's algorithm</strong><br>
+              <span class="small">Attempt to address high branching factor causing short dead-end branches. Quite successful, I guess, and does not increase algorithm complexity this time... well... it does but from O(n) to O(2n), so no biggie.</span><br>
+              <a href="http://red-green-rewrite.github.io/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/" class="btn btn-primary btn-sm">Blog post</a>
+              <a href="http://red-green-rewrite.github.io/kotlinjs-hexagen-hybrid/index.html" class="btn btn-primary btn-sm">Online demo</a>
+              <a href="https://github.com/MiloszKrajewski/kotlinjs-hexagen-hybrid" class="btn btn-primary btn-sm">Source code</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </p>
+
+    <p class="text-right">Milosz Krajewski &lt;<a href="mailto:milosz.krajewski@gmail.com">milosz.krajewski@gmail.com</a>&gt;</p>
+  </div>
+</body>
+
+</html>
