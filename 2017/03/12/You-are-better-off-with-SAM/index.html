@@ -5,20 +5,23 @@
   
   <title>You are better off with SAM | Red, Green, Rewrite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="This introduction is for hard core OO developers (mostly C# but maybe Java as well) who are trying to add FP to their skillset. If you are FP developer, you most likely know all those things.
-SAM is t">
+  <meta name="description" content="NOTE: This is part one of two part article. You can read second part here. To be honest, this is where interesting stuff starts.
+
+This introduction is for hard core OO developers (mostly C# but maybe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="You are better off with SAM">
 <meta property="og:url" content="http://red-green-rewrite.github.io/2017/03/12/You-are-better-off-with-SAM/index.html">
 <meta property="og:site_name" content="Red, Green, Rewrite">
-<meta property="og:description" content="This introduction is for hard core OO developers (mostly C# but maybe Java as well) who are trying to add FP to their skillset. If you are FP developer, you most likely know all those things.
-SAM is t">
+<meta property="og:description" content="NOTE: This is part one of two part article. You can read second part here. To be honest, this is where interesting stuff starts.
+
+This introduction is for hard core OO developers (mostly C# but maybe">
 <meta property="og:image" content="http://red-green-rewrite.github.io/images/sam/oo-intellisense.png">
-<meta property="og:updated_time" content="2017-03-21T02:51:51.093Z">
+<meta property="og:updated_time" content="2017-03-21T03:16:53.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="You are better off with SAM">
-<meta name="twitter:description" content="This introduction is for hard core OO developers (mostly C# but maybe Java as well) who are trying to add FP to their skillset. If you are FP developer, you most likely know all those things.
-SAM is t">
+<meta name="twitter:description" content="NOTE: This is part one of two part article. You can read second part here. To be honest, this is where interesting stuff starts.
+
+This introduction is for hard core OO developers (mostly C# but maybe">
 <meta name="twitter:image" content="http://red-green-rewrite.github.io/images/sam/oo-intellisense.png">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
@@ -94,7 +97,9 @@ SAM is t">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>This introduction is for hard core OO developers (mostly C# but maybe Java as well) who are trying to add FP to their skillset. If you are FP developer, you most likely know all those things.</p>
+        <p><strong>NOTE:</strong> This is part one of two part article. You can read second part <a href="/2017/03/20/Further-than-SAM/"><strong>here</strong></a>. To be honest, this is where interesting stuff starts.</p>
+<hr>
+<p>This introduction is for hard core OO developers (mostly C# but maybe Java as well) who are trying to add FP to their skillset. If you are FP developer, you most likely know all those things.</p>
 <p><em>SAM</em> is the term introduced in Java 8 and means “Single Abstract Method”. It’s describes an interface with only one method. Of course, we had them before (both in Java and C#):</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// C#</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IComparer</span>&lt;<span class="title">T</span>&gt; </span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Compare</span><span class="params">(T alpha, T bravo)</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IEnumerable</span>&lt;<span class="title">T</span>&gt; </span></div><div class="line">&#123;</div><div class="line">    <span class="function">IEnumerator&lt;T&gt; <span class="title">GetEnumerator</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Java</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>but they became more visible in Java 8, as they were used to implement very important language feature. We will talk about this in few moments.</p>
@@ -201,7 +206,7 @@ SAM is t">
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ILoggerFactory</span></div><div class="line">&#123;</div><div class="line">    <span class="function">ILogger <span class="title">Logger</span>(<span class="params"><span class="keyword">string</span> name</span>)</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ILogger</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Log</span>(<span class="params">Severity severity, Func&lt;<span class="keyword">string</span>&gt; builder</span>)</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>All the methods are still available, though:</p>
 <p><img src="/images/sam/oo-intellisense.png" alt="intellisense"></p>
-<h2 id="Further-with-SAM"><a href="#Further-with-SAM" class="headerlink" title="Further with SAM"></a>Further with SAM</h2><p>You can go further with SAM by using just functions. Please read second part <a href="/2017/03/20/Further-than-SAM/"><strong>here</strong></a>. For me, this is where interesting stuff starts.</p>
+<h2 id="Further-with-SAM"><a href="#Further-with-SAM" class="headerlink" title="Further with SAM"></a>Further with SAM</h2><p>You can go further with SAM by using just functions. Please read second part <a href="/2017/03/20/Further-than-SAM/"><strong>here</strong></a>.</p>
 
       
     </div>
