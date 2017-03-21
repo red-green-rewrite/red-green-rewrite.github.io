@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Further than SAM | Red, Green, Rewrite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="NOTE: this is the second part of this article. Please read it if haven’t yet.
+
+The interfaceLet’s start from scratch. You know all the things you read in previous article, but you have no code at all.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Further than SAM">
+<meta property="og:url" content="http://red-green-rewrite.github.io/2017/03/20/Further-than-SAM/index.html">
+<meta property="og:site_name" content="Red, Green, Rewrite">
+<meta property="og:description" content="NOTE: this is the second part of this article. Please read it if haven’t yet.
+
+The interfaceLet’s start from scratch. You know all the things you read in previous article, but you have no code at all.">
+<meta property="og:updated_time" content="2017-03-21T02:55:56.492Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Further than SAM">
+<meta name="twitter:description" content="NOTE: this is the second part of this article. Please read it if haven’t yet.
+
+The interfaceLet’s start from scratch. You know all the things you read in previous article, but you have no code at all.">
+  
+    <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Red, Green, Rewrite</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">the tales about software development</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Further-than-SAM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/20/Further-than-SAM/" class="article-date">
+  <time datetime="2017-03-20T01:24:13.000Z" itemprop="datePublished">2017-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Further than SAM
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>NOTE:</strong> this is the second part of <a href="/2017/03/12/You-are-better-off-with-SAM/"><strong>this article</strong></a>. Please read it if haven’t yet.</p>
+<hr>
+<h2 id="The-interface"><a href="#The-interface" class="headerlink" title="The interface"></a>The interface</h2><p>Let’s start from scratch. You know all the things you read in previous article, but you have no code at all.</p>
+<p>So we said that SAM interfaces are technically equivalent to functions (to be precise: <code>Func</code> or <code>Action</code> depending on <a href="http://james-iry.blogspot.co.uk/2009/07/void-vs-unit.html" target="_blank" rel="external">return type</a>). So, let’s see where it can get us.</p>
+<p>Knowing the interfaces were declared like this:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ILogger</span> &#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Log</span>(<span class="params">Severity severity, Func&lt;<span class="keyword">string</span>&gt; builder</span>)</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ILoggerFactory</span> &#123;</div><div class="line">    <span class="function">ILogger <span class="title">GetLogger</span>(<span class="params"><span class="keyword">string</span> name</span>)</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>we can redefine them as:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// pseudo-code</span></div><div class="line">type ILogger = Action&lt;Severity, Func&lt;<span class="keyword">string</span>&gt;&gt;;</div><div class="line">type ILoggerFactory = Func&lt;<span class="keyword">string</span>, ILogger&gt;;</div></pre></td></tr></table></figure>
+<p>Now, we can substitute <code>ILogger</code> actual type (<code>Action&lt;...&gt;</code>) as <code>ILoggerFactory</code> output type, receiving:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Pseudo-code</span></div><div class="line">type ILoggerFactory = Func&lt;<span class="keyword">string</span>, Action&lt;Severity, Func&lt;<span class="keyword">string</span>&gt;&gt;&gt;;</div></pre></td></tr></table></figure>
+<p>So, the interface to logging framework is just <code>Func&lt;string, Action&lt;Severity, Func&lt;string&gt;&gt;&gt;</code>, and next time someone ask you on the tube, “Hey man, what’s your <code>Func&lt;string, Action&lt;Severity, Func&lt;string&gt;&gt;&gt;</code>?” you can just tell him: “I’m using log4net, matey”.</p>
+<p>In my opinion, using descriptive names depends on scope. I would actually encourage you to use just <code>Func&lt;T&gt;</code> for locally scoped or internal factory, or <code>i</code> as an index in 3-line for statement but for objects which are known by entire application I would prefer longer, more distinguished names.<br>In case of “logging framework interface” I would suggest quite descriptive names. Yes, it is <em>just a function</em>, but it would be much more readable if we call it <code>LoggerFactory</code>.</p>
+<p>Let’s do it then:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Severity &#123; Trace, Debug, Info, Warn, Error, Fatal &#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> Logger <span class="title">LoggerFactory</span>(<span class="params"><span class="keyword">string</span> name</span>)</span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">void</span> <span class="title">Logger</span>(<span class="params">Severity severity, Func&lt;<span class="keyword">string</span>&gt; builder</span>)</span>;</div></pre></td></tr></table></figure>
+<p>That’s our interface.</p>
+<h2 id="You-can-almost-go-home-now"><a href="#You-can-almost-go-home-now" class="headerlink" title="You can almost go home now"></a>You can almost go home now</h2><p>So, the NLog implementation we did in previous article will look now a little bit different:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LoggerFactory <span class="title">NLogLoggerFactory</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> name =&gt; &#123; <span class="comment">// factory</span></div><div class="line">        <span class="keyword">var</span> logger = LogManager.GetLogger(name);</div><div class="line">        <span class="keyword">return</span> (severity, builder) =&gt; &#123; <span class="comment">// logger</span></div><div class="line">            <span class="keyword">var</span> level = ToLogLevel(severity);</div><div class="line">            <span class="keyword">if</span> (logger.IsEnabled(level))</div><div class="line">                logger.Log(level, builder());</div><div class="line">        &#125;;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>You can see that we declared a factory method which can be called <code>LoggerFactory</code> constructor. A <code>LoggerFactory</code> will construct a <code>Logger</code> every time you call it with logger name (<code>name =&gt; { ... }</code>). A <code>Logger</code> will log the message when called with severity and (message) builder (<code>(severity, builder) =&gt; { ... }</code>).</p>
+<p>If you need simplest possible implementations of <code>LoggerFactory</code> I would say it would <code>NullLoggerFactory</code> followed by <code>ConsoleLoggerFactory</code>:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LoggerFactory <span class="title">NullLoggerFactory</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> name =&gt; (severity, builder) =&gt; &#123; &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LoggerFactory <span class="title">ConsoleLoggerFactory</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> name =&gt; (severity, builder) =&gt; </div><div class="line">        Console.WriteLine(<span class="string">$"[<span class="subst">&#123;severity&#125;</span>] <span class="subst">&#123;name&#125;</span>: <span class="subst">&#123;builder()&#125;</span>"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Let’s look at specific usage. You have to create a logger factory first (you need one of those):</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> loggerFactory = NLogLoggerFactory(); <span class="comment">// or ConsoleLoggerFactory() ?</span></div></pre></td></tr></table></figure>
+<p>Then, you can create loggers when you need them:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> logger = loggerFactory(<span class="string">"default"</span>);</div></pre></td></tr></table></figure>
+<p>and log messages like you always did:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">logger(Severity.Warn, () =&gt; <span class="string">"Something is rotten in the state of Denmark"</span>);</div></pre></td></tr></table></figure>
+<p>You can also just sprint through all the layers:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">loggerFactory(<span class="string">"root"</span>)(Severity.Trace, () =&gt; <span class="string">"Adhoc message"</span>);</div></pre></td></tr></table></figure>
+<p>Job’s done. That’s what we wanted.</p>
+<h2 id="It-is-not-exactly-the-same-right"><a href="#It-is-not-exactly-the-same-right" class="headerlink" title="It is not exactly the same, right?"></a>It is not exactly the same, right?</h2><p>It is not. There is only one way to use it but wasn’t it a <a href="https://www.python.org/dev/peps/pep-0020/" target="_blank" rel="external">good thing</a>?. Joking aside, we want our extension methods back. Good news is, all you need is to ask:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">LoggerFactoryExtensions</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Logger <span class="title">Logger</span>(<span class="params"><span class="keyword">this</span> LoggerFactory factory, <span class="keyword">string</span> name</span>) </span>=&gt;</div><div class="line">        factory(name); <span class="comment">// the call actually happens here</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Logger <span class="title">Logger</span>(<span class="params"><span class="keyword">this</span> LoggerFactory factory, Type type</span>) </span>=&gt;</div><div class="line">        factory.Logger(type.FullName);</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Logger Logger&lt;T&gt;(<span class="keyword">this</span> LoggerFactory factory) =&gt;</div><div class="line">        factory.Logger(<span class="keyword">typeof</span>(T));</div><div class="line">    [MethodImpl(MethodImplOptions.NoInlining)]</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Logger <span class="title">Logger</span>(<span class="params"><span class="keyword">this</span> LoggerFactory factory</span>) </span>=&gt;</div><div class="line">        factory.Logger(<span class="keyword">new</span> StackTrace().GetFrame(<span class="number">1</span>).GetMethod().DeclaringType);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>So now you can use extension methods on <code>LoggerFactory</code> or use <code>LoggerFactory</code> as a function (yes, it may look confusing):</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// just call *it*</span></div><div class="line"><span class="keyword">var</span> logger = loggerFactory(<span class="string">"RootLogger"</span>);</div><div class="line"><span class="comment">// or use extension</span></div><div class="line"><span class="keyword">var</span> logger = loggerFactory.Logger(<span class="keyword">typeof</span>(GatewayController));</div><div class="line"><span class="keyword">var</span> logger = loggerFactory.Logger();</div></pre></td></tr></table></figure>
+<h2 id="Normalizing-Logger-interface"><a href="#Normalizing-Logger-interface" class="headerlink" title="Normalizing Logger interface"></a>Normalizing Logger interface</h2><p>In previous article we’ve introduced message <code>Severity</code> to reduce number of overloads, but when we added convenience methods there was 24 of them again (still better than 24 to be implemented on interface though). Let’s try to apply same tactics and normalize convenience layer as well. We can create new “interface” (it’s not technically an <code>interface</code> but it is still <em>an interface</em>). Let’s call it <code>Channel</code> (like Trace, Debug or Error <em>channel</em>).</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">void</span> <span class="title">Channel</span>(<span class="params">Func&lt;<span class="keyword">string</span>&gt; factory</span>)</span>;</div></pre></td></tr></table></figure>
+<p>As you can see, <code>Channel</code> is like a <code>Logger</code>, but without <code>Severity</code>, as <code>Severity</code> has been already applied. We can add some convenience methods as well:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">LoggerExtensions</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Channel <span class="title">Channel</span>(<span class="params"><span class="keyword">this</span> Logger logger, Severity severity</span>) </span>=&gt;</div><div class="line">        builder =&gt; logger(severity, builder); <span class="comment">// partially apply severity</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Channel <span class="title">Debug</span>(<span class="params"><span class="keyword">this</span> Logger logger</span>) </span>=&gt; logger.Channel(Severity.Debug);</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Channel <span class="title">Trace</span>(<span class="params"><span class="keyword">this</span> Logger logger</span>) </span>=&gt; logger.Channel(Severity.Trace);</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Channel <span class="title">Info</span>(<span class="params"><span class="keyword">this</span> Logger logger</span>) </span>=&gt; logger.Channel(Severity.Info);</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Channel <span class="title">Warn</span>(<span class="params"><span class="keyword">this</span> Logger logger</span>) </span>=&gt; logger.Channel(Severity.Warn);</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Channel <span class="title">Error</span>(<span class="params"><span class="keyword">this</span> Logger logger</span>) </span>=&gt; logger.Channel(Severity.Error);</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Channel <span class="title">Fatal</span>(<span class="params"><span class="keyword">this</span> Logger logger</span>) </span>=&gt; logger.Channel(Severity.Fatal);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Now you can use like this:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> channel = logger.Trace();</div><div class="line">channel(() =&gt; <span class="string">"This is trace message"</span>);</div></pre></td></tr></table></figure>
+<p>There is still only one way to format a message (using <code>Func&lt;string&gt;</code>). Although, we have a type (<code>Channel</code>) we can add extensions methods to it:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">ChannelExtensions</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Log</span>(<span class="params"><span class="keyword">this</span> Channel channel, Func&lt;<span class="keyword">string</span>&gt; builder</span>) </span>=&gt;</div><div class="line">        channel(builder); <span class="comment">// the call actually happens here</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Log</span>(<span class="params"><span class="keyword">this</span> Channel channel, <span class="keyword">string</span> message</span>) </span>=&gt;</div><div class="line">        channel.Log(() =&gt; message);</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Log</span>(<span class="params"><span class="keyword">this</span> Channel channel, <span class="keyword">string</span> pattern, <span class="keyword">params</span> <span class="keyword">object</span>[] args</span>) </span>=&gt;</div><div class="line">        channel.Log(() =&gt; <span class="keyword">string</span>.Format(pattern, args));</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Log</span>(<span class="params"><span class="keyword">this</span> Channel channel, Exception error</span>) </span>=&gt;</div><div class="line">        channel.Log(error.ToString);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>So, now we have all convenience methods back:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> logger = loggerFactory.Logger(); <span class="comment">// for this class</span></div><div class="line">logger.Warn().Log(<span class="string">"This is a message with some args, like '&#123;0&#125;' for example"</span>, <span class="number">7</span>);</div><div class="line">logger.Error().Log(<span class="keyword">new</span> Exception(<span class="string">"Failed to do something"</span>));</div></pre></td></tr></table></figure>
+<p>Syntactically, I don’t like the parenthesis after channel (Trace, Debug, etc.). Unfortunately, we don’t have <em>extension properties</em> yet (C# 8, maybe?). As soon as they are available, they could be used to strip parenthesis from channel selection and produce prettier code:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> logger = loggerFactory.Logger(); <span class="comment">// for this class</span></div><div class="line">logger.Warn.Log(<span class="string">"This is a message with some args, like '&#123;0&#125;' for example"</span>, <span class="number">7</span>);</div></pre></td></tr></table></figure>
+<p>Nice, isn’t it?</p>
+<h2 id="Full-implementation"><a href="#Full-implementation" class="headerlink" title="Full implementation"></a>Full implementation</h2><p>So, complete implementation of the interface with extension methods is:</p>
+<script src="https://gist.github.com/MiloszKrajewski/18ac53e4a54ee952dbb48e1fd0c47441.js?file=pocket-logging-fp.cs"></script>
+
+<p>While adapter for NLog could be implemented like:</p>
+<script src="https://gist.github.com/MiloszKrajewski/18ac53e4a54ee952dbb48e1fd0c47441.js?file=pocket-logging-fp-nlog.cs"></script>
+
+<h2 id="What-can-be-added"><a href="#What-can-be-added" class="headerlink" title="What can be added?"></a>What can be added?</h2><p>Definitely, message expansion (<code>builder()</code>) should be wrapped in <code>try...catch</code> so badly formatted message cannot blow up the application. It would suggest doing it in <code>Logger.Channel(this Logger logger, Severity severity)</code> as everything ultimately goes through this function (yes, it is by design - there is only one place where it needs to be done).</p>
+<p>I would also invest in better <code>error.ToString</code> to log exception. Some <code>Func&lt;Exception, string&gt;</code> (of course) which would explain the exception, processing inner exceptions and stack traces.</p>
+<p>Convenience methods can be still added to <code>Logger</code>: like <code>Log(Severity, ...)</code>, and all 24 overloads for <code>Trace(...)</code>, <code>Debug(...)</code>, etc. I didn’t do it here, as they are not really needed anymore, but if you really like them there is no problem to do so (see GitHub project for T4 implementation).</p>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><p>This project is available on <a href="https://github.com/MiloszKrajewski/Pocket.Logging" target="_blank" rel="external">GitHub</a>. Please note, this is just a toy project to present some ideas rather than production ready solution.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://red-green-rewrite.github.io/2017/03/20/Further-than-SAM/" data-id="cj0iyigtm0003scjb7jozddbd" class="article-share-link">Share</a>
+      
+        <a href="http://red-green-rewrite.github.io/2017/03/20/Further-than-SAM/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design/">design</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/functional/">functional</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/03/12/You-are-better-off-with-SAM/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">You are better off with SAM</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/functional/">functional</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin/">kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin-js/">kotlin.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maze/">maze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala-js/">scala.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/csharp/" style="font-size: 15px;">csharp</a> <a href="/tags/design/" style="font-size: 12.5px;">design</a> <a href="/tags/fable/" style="font-size: 12.5px;">fable</a> <a href="/tags/fsharp/" style="font-size: 17.5px;">fsharp</a> <a href="/tags/functional/" style="font-size: 12.5px;">functional</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/kotlin/" style="font-size: 15px;">kotlin</a> <a href="/tags/kotlin-js/" style="font-size: 12.5px;">kotlin.js</a> <a href="/tags/maze/" style="font-size: 17.5px;">maze</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/scala-js/" style="font-size: 10px;">scala.js</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/20/Further-than-SAM/">Further than SAM</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/12/You-are-better-off-with-SAM/">You are better off with SAM</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/">Kruskal/DFS hybrid with reduced branching factor</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/">Kruskal, Kotlin, and Hex Tiles</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/30/Curious-case-of-disjoint-set/">Curious case of disjoint-set</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Milosz Krajewski<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'red-green-rewrite';
+  
+  var disqus_url = 'http://red-green-rewrite.github.io/2017/03/20/Further-than-SAM/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
