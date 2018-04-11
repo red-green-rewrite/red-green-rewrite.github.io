@@ -5,32 +5,19 @@
   
   <title>Shaking maze generator | Red, Green, Rewrite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Quick links
-Randomized depth-first search
-Randomized depth-first search with stack shaking
-Random spanning tree with Prim’s algorithm
-Random spanning tree using Kruskal’s algorithm
-Hybrid of depth-fir">
+  <meta name="description" content="Quick links Randomized depth-first search Randomized depth-first search with stack shaking Random spanning tree with Prim’s algorithm Random spanning tree using Kruskal’s algorithm Hybrid of depth-fir">
+<meta name="keywords" content="algorithm,fsharp,maze,fable">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shaking maze generator">
 <meta property="og:url" content="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/index.html">
 <meta property="og:site_name" content="Red, Green, Rewrite">
-<meta property="og:description" content="Quick links
-Randomized depth-first search
-Randomized depth-first search with stack shaking
-Random spanning tree with Prim’s algorithm
-Random spanning tree using Kruskal’s algorithm
-Hybrid of depth-fir">
+<meta property="og:description" content="Quick links Randomized depth-first search Randomized depth-first search with stack shaking Random spanning tree with Prim’s algorithm Random spanning tree using Kruskal’s algorithm Hybrid of depth-fir">
+<meta property="og:locale" content="en">
 <meta property="og:image" content="http://red-green-rewrite.github.io/images/maze/maze-2x100x100.png">
-<meta property="og:updated_time" content="2016-10-31T03:11:52.786Z">
+<meta property="og:updated_time" content="2016-10-31T03:11:52.787Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shaking maze generator">
-<meta name="twitter:description" content="Quick links
-Randomized depth-first search
-Randomized depth-first search with stack shaking
-Random spanning tree with Prim’s algorithm
-Random spanning tree using Kruskal’s algorithm
-Hybrid of depth-fir">
+<meta name="twitter:description" content="Quick links Randomized depth-first search Randomized depth-first search with stack shaking Random spanning tree with Prim’s algorithm Random spanning tree using Kruskal’s algorithm Hybrid of depth-fir">
 <meta name="twitter:image" content="http://red-green-rewrite.github.io/images/maze/maze-2x100x100.png">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
@@ -91,7 +78,7 @@ ga('send', 'pageview');
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
       </div>
     </div>
   </div>
@@ -125,27 +112,27 @@ ga('send', 'pageview');
 <li><a href="/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/">Random spanning tree with Prim’s algorithm</a></li>
 <li><a href="/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/">Random spanning tree using Kruskal’s algorithm</a></li>
 <li><a href="/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/">Hybrid of depth-first search and Kruskal’s algorithm</a></li>
-<li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="external">Source code</a></li>
+<li><a href="https://github.com/MiloszKrajewski/fable-daedalus" target="_blank" rel="noopener">Source code</a></li>
 <li><a href="/fable-daedalus/index.html">Online demo</a></li>
 </ul>
 <h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p>This blogpost requires familiarity with <a href="/2016/09/14/Maze-generator-with-Fable/">previous one</a>.</p>
 <h2 id="Low-branching-factor"><a href="#Low-branching-factor" class="headerlink" title="Low branching factor"></a>Low branching factor</h2><p>One of the disadvantages of using DFS to build mazes is “low branching factor”. The problem is that it actually runs for long time before hitting dead-end and having to backtrack, so it creates very long corridors with no room to “make the wrong turn” for potential maze explorer.<br>Let’s deal with it.</p>
 <h2 id="The-algorithm"><a href="#The-algorithm" class="headerlink" title="The algorithm"></a>The algorithm</h2><p>Originally I used recursive version, but to avoid stack overflow, actual demo was done non-recursive version of DFS. </p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> stackless mark test fanout node = seq &#123;</div><div class="line">    <span class="keyword">let</span> <span class="keyword">mutable</span> stack = [[node]]</div><div class="line">    <span class="keyword">while</span> stack.Length &gt; <span class="number">0</span> <span class="keyword">do</span></div><div class="line">        <span class="keyword">let</span> head, stack' = </div><div class="line">            <span class="keyword">match</span> stack <span class="keyword">with</span></div><div class="line">            | [] -&gt; None, [] </div><div class="line">            | [] :: rest -&gt; None, rest</div><div class="line">            | (head :: tail) :: rest -&gt;</div><div class="line">                <span class="keyword">if</span> test head <span class="keyword">then</span> None, tail :: rest</div><div class="line">                <span class="keyword">else</span> head |&gt; apply mark |&gt; Some, (head |&gt; fanout |&gt; List.ofSeq) :: tail :: rest</div><div class="line">        <span class="keyword">match</span> head <span class="keyword">with</span> | Some n -&gt; <span class="keyword">yield</span> n | _ -&gt; ()</div><div class="line">        stack &lt;- stack'</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> stackless mark test fanout node = seq &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mutable</span> stack = [[node]]</span><br><span class="line">    <span class="keyword">while</span> stack.Length &gt; <span class="number">0</span> <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">let</span> head, stack' = </span><br><span class="line">            <span class="keyword">match</span> stack <span class="keyword">with</span></span><br><span class="line">            | [] -&gt; None, [] </span><br><span class="line">            | [] :: rest -&gt; None, rest</span><br><span class="line">            | (head :: tail) :: rest -&gt;</span><br><span class="line">                <span class="keyword">if</span> test head <span class="keyword">then</span> None, tail :: rest</span><br><span class="line">                <span class="keyword">else</span> head |&gt; apply mark |&gt; Some, (head |&gt; fanout |&gt; List.ofSeq) :: tail :: rest</span><br><span class="line">        <span class="keyword">match</span> head <span class="keyword">with</span> | Some n -&gt; <span class="keyword">yield</span> n | _ -&gt; ()</span><br><span class="line">        stack &lt;- stack'</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>This version will be modified to allow “shaking the stack”. I’ll introduce one argument (<code>shake</code>) and use <code>shake stack</code> instead of just <code>stack</code> in match statement.</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> stackless mark test fanout shake node = seq &#123; <span class="comment">// &lt;-- here</span></div><div class="line">    <span class="keyword">let</span> <span class="keyword">mutable</span> stack = [[node]]</div><div class="line">    <span class="keyword">while</span> stack.Length &gt; <span class="number">0</span> <span class="keyword">do</span></div><div class="line">        <span class="keyword">let</span> head, stack' = </div><div class="line">            <span class="keyword">match</span> shake stack <span class="keyword">with</span> <span class="comment">// &lt;-- and here</span></div><div class="line">            | [] -&gt; None, [] </div><div class="line">            | [] :: rest -&gt; None, rest</div><div class="line">            | (head :: tail) :: rest -&gt;</div><div class="line">                <span class="keyword">if</span> test head <span class="keyword">then</span> None, tail :: rest</div><div class="line">                <span class="keyword">else</span> head |&gt; apply mark |&gt; Some, (head |&gt; fanout |&gt; List.ofSeq) :: tail :: rest</div><div class="line">        <span class="keyword">match</span> head <span class="keyword">with</span> | Some n -&gt; <span class="keyword">yield</span> n | _ -&gt; ()</div><div class="line">        stack &lt;- stack'</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> stackless mark test fanout shake node = seq &#123; <span class="comment">// &lt;-- here</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mutable</span> stack = [[node]]</span><br><span class="line">    <span class="keyword">while</span> stack.Length &gt; <span class="number">0</span> <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">let</span> head, stack' = </span><br><span class="line">            <span class="keyword">match</span> shake stack <span class="keyword">with</span> <span class="comment">// &lt;-- and here</span></span><br><span class="line">            | [] -&gt; None, [] </span><br><span class="line">            | [] :: rest -&gt; None, rest</span><br><span class="line">            | (head :: tail) :: rest -&gt;</span><br><span class="line">                <span class="keyword">if</span> test head <span class="keyword">then</span> None, tail :: rest</span><br><span class="line">                <span class="keyword">else</span> head |&gt; apply mark |&gt; Some, (head |&gt; fanout |&gt; List.ofSeq) :: tail :: rest</span><br><span class="line">        <span class="keyword">match</span> head <span class="keyword">with</span> | Some n -&gt; <span class="keyword">yield</span> n | _ -&gt; ()</span><br><span class="line">        stack &lt;- stack'</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>That’s absolutely it in “The algorithm” layer.</p>
 <h2 id="The-glue"><a href="#The-glue" class="headerlink" title="The glue"></a>The glue</h2><p>There was a “glue” layer adapting “The algorithm” to “The domain” and it just stopped working as we added new argument to the function. Don’t worry, though, it just a simple fix. </p>
 <p>Previously it was calling <code>traverse</code> (or <code>stackless</code> depending which approach you used ‘elegant’ or ‘safe’) now it should call <code>stackless</code> (as <code>traverse</code> does not support shaking) with this extra argument. So the old code: </p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </div><div class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle)</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </span><br><span class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle)</span><br></pre></td></tr></table></figure>
 <p>should be changed to:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </div><div class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle) id</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </span><br><span class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle) id</span><br></pre></td></tr></table></figure>
 <p>and the code will compile again and work exactly as it was working before (you may remember that <code>id</code> function does absolutely nothing). Why we did that then?</p>
 <p>Because now, on every single step we have an ability to modify the backtracking stack. </p>
 <p>I’ll suggest something like:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> shake stack = </div><div class="line">    <span class="keyword">if</span> Random.random () &gt; <span class="number">0.01</span> <span class="keyword">then</span> stack</div><div class="line">    <span class="keyword">else</span> stack |&gt; Array.ofList |&gt; apply Array.shuffleInPlace |&gt; Array.toList</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> shake stack = </span><br><span class="line">    <span class="keyword">if</span> Random.random () &gt; <span class="number">0.01</span> <span class="keyword">then</span> stack</span><br><span class="line">    <span class="keyword">else</span> stack |&gt; Array.ofList |&gt; apply Array.shuffleInPlace |&gt; Array.toList</span><br></pre></td></tr></table></figure>
 <p>Which in 99% of cases returns <code>stack</code> unmodified but from time to time shuffles it completely. Of course, it would be nice to use it now (<code>id</code> gets replaced by <code>shake</code>):</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </div><div class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle) shake</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InitAt (<span class="number">0</span>, <span class="number">0</span>) </span><br><span class="line">|&gt; DFS.stackless (targetOf &gt;&gt; mark) (targetOf &gt;&gt; test) (targetOf &gt;&gt; fanout &gt;&gt; Array.shuffle) shake</span><br></pre></td></tr></table></figure>
 <p>Please note, that from algorithm complexity point of view this is not good approach, as complexity just jumped from <strong>O(N)</strong> to <strong>O(N^2)</strong> (it’s a little but more complicated than that), but definitely it gives <a href="/fable-daedalus/index.html">better results</a>, as it tries to branch earlier.</p>
 <p><img src="/images/maze/maze-2x100x100.png" alt="Pushing forward on the left, branching early on the right"></p>
 <p>The bottom line is that I did not really modify the algorithm (<em>DFS</em>) I just injected some extra behavior into it, but it is totally externally controlled (kind of definition of “injected”, right?). Functional composition rlz.</p>
@@ -153,7 +140,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" data-id="cj0iyigty000ascjba8na0sai" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" data-id="cjfvr5r96001sqsjb3hn2zjjv" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -213,7 +200,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/csharp/" style="font-size: 15px;">csharp</a> <a href="/tags/design/" style="font-size: 12.5px;">design</a> <a href="/tags/fable/" style="font-size: 12.5px;">fable</a> <a href="/tags/fsharp/" style="font-size: 17.5px;">fsharp</a> <a href="/tags/functional/" style="font-size: 12.5px;">functional</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/kotlin/" style="font-size: 15px;">kotlin</a> <a href="/tags/kotlin-js/" style="font-size: 12.5px;">kotlin.js</a> <a href="/tags/maze/" style="font-size: 17.5px;">maze</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/scala-js/" style="font-size: 10px;">scala.js</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
+      <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/csharp/" style="font-size: 14px;">csharp</a> <a href="/tags/design/" style="font-size: 12px;">design</a> <a href="/tags/fable/" style="font-size: 14px;">fable</a> <a href="/tags/fsharp/" style="font-size: 18px;">fsharp</a> <a href="/tags/functional/" style="font-size: 12px;">functional</a> <a href="/tags/kata/" style="font-size: 10px;">kata</a> <a href="/tags/kotlin/" style="font-size: 14px;">kotlin</a> <a href="/tags/kotlin-js/" style="font-size: 12px;">kotlin.js</a> <a href="/tags/maze/" style="font-size: 16px;">maze</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/scala-js/" style="font-size: 10px;">scala.js</a> <a href="/tags/state-machine/" style="font-size: 10px;">state-machine</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
     </div>
   </div>
 
@@ -222,7 +209,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
     </div>
   </div>
 
@@ -233,6 +220,10 @@ ga('send', 'pageview');
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/10/Saving-New-York-with-F-Bloxorz-and-John-McClane/">Saving New York with F#, Bloxorz and John McClane</a>
+          </li>
         
           <li>
             <a href="/2017/03/20/Further-than-SAM/">Further than SAM</a>
@@ -250,10 +241,6 @@ ga('send', 'pageview');
             <a href="/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/">Kruskal, Kotlin, and Hex Tiles</a>
           </li>
         
-          <li>
-            <a href="/2016/09/30/Curious-case-of-disjoint-set/">Curious case of disjoint-set</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -266,7 +253,7 @@ ga('send', 'pageview');
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Milosz Krajewski<br>
+      &copy; 2018 Milosz Krajewski<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
