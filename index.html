@@ -145,7 +145,7 @@ ga('send', 'pageview');
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>; <span class="number">2</span>; <span class="number">3</span>; <span class="number">4</span>; <span class="number">5</span>; <span class="number">6</span>; <span class="number">7</span>; <span class="number">8</span>; <span class="number">9</span>; <span class="number">10</span>; <span class="number">11</span>; <span class="number">12</span>]</span><br></pre></td></tr></table></figure>
 <p>Yay! Exactly as expented. You can add cycles (for example: <code>2, [5, 6, 1]</code>) to test if cycles are properly eliminated.</p>
 <p><strong>NOTE</strong>: To run it in <a href="http://fable.io/repl" target="_blank" rel="noopener">fable.io/repl</a> you will need to polyfill <code>Queue</code>, for example:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">type</span> <span class="title">Queue</span>&lt;<span class="title">'a</span>&gt;</span>(values: <span class="symbol">'a</span> seq) =</span><br><span class="line">    <span class="keyword">let</span> values = ResizeArray(values)</span><br><span class="line">    <span class="keyword">member</span> x.Count = values.Count</span><br><span class="line">    <span class="keyword">member</span> x.Enqueue value = values.Add(value)</span><br><span class="line">    <span class="keyword">member</span> x.Dequeue () = <span class="keyword">let</span> result = values.[<span class="number">0</span>] <span class="keyword">in</span> values.RemoveAt(<span class="number">0</span>); result</span><br></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">type</span> <span class="title">Queue</span>&lt;'a&gt;</span>(values: <span class="symbol">'a</span> seq) =</span><br><span class="line">    <span class="keyword">let</span> values = ResizeArray(values)</span><br><span class="line">    <span class="keyword">member</span> x.Count = values.Count</span><br><span class="line">    <span class="keyword">member</span> x.Enqueue value = values.Add(value)</span><br><span class="line">    <span class="keyword">member</span> x.Dequeue () = <span class="keyword">let</span> result = values.[<span class="number">0</span>] <span class="keyword">in</span> values.RemoveAt(<span class="number">0</span>); result</span><br></pre></td></tr></table></figure>
 <h2 id="Scanning-directories-with-BFS"><a href="#Scanning-directories-with-BFS" class="headerlink" title="Scanning directories with BFS"></a>Scanning directories with BFS</h2><p>One of the examples of tree traversal algorithms is listing directories. I never really cared which tree traversal algorithm, DFS or BFS, is used for that. I was actually suprised that Unix <code>find</code> works differently than PowerShell <code>gci</code> (<code>Get-ChildItem</code>). Apparently, <code>find</code> uses DFS while <code>gci</code> uses BFS.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find -<span class="built_in">type</span> d | less</span><br></pre></td></tr></table></figure>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gci -r -dir | % &#123; <span class="variable">$_</span>.FullName &#125; | oh -p</span><br></pre></td></tr></table></figure>
@@ -324,7 +324,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2018/03/10/Saving-New-York-with-F-Bloxorz-and-John-McClane/" data-id="cjfvr5r7x000aqsjbmzot8aal" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2018/03/10/Saving-New-York-with-F-Bloxorz-and-John-McClane/" data-id="cjfvrga4c000c98jbarqzexcx" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2018/03/10/Saving-New-York-with-F-Bloxorz-and-John-McClane/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -420,7 +420,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2017/03/20/Further-than-SAM/" data-id="cjfvr5r7j0003qsjbz2h54vf7" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2017/03/20/Further-than-SAM/" data-id="cjfvrga40000498jbyl2ys2dk" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2017/03/20/Further-than-SAM/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -570,7 +570,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2017/03/12/You-are-better-off-with-SAM/" data-id="cjfvr5r95001qqsjbuo7ai805" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2017/03/12/You-are-better-off-with-SAM/" data-id="cjfvrga4g000i98jbay4608tk" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2017/03/12/You-are-better-off-with-SAM/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -670,7 +670,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/" data-id="cjfvr5r7l0004qsjb0hpo7p1n" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/" data-id="cjfvrga3x000398jbzhy0erky" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/10/30/Kruskal-DFS-hybrid-with-reduced-branching-factor/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -773,7 +773,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/" data-id="cjfvr5r7r0005qsjb7tfqqhl2" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/" data-id="cjfvrga44000598jb07t642gr" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/10/06/Kruskal-Kotlin-and-Hex-Tiles/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -857,7 +857,7 @@ ga('send', 'pageview');
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// F#</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">private</span> merge tagA tagB =</span><br><span class="line">    <span class="keyword">match</span> find(tagA), find(tagB) <span class="keyword">with</span></span><br><span class="line">    | rootA, rootB <span class="keyword">when</span> rootA &lt;&gt; rootB -&gt;</span><br><span class="line">        <span class="keyword">match</span> rootA.height - rootB.height <span class="keyword">with</span></span><br><span class="line">        | balance <span class="keyword">when</span> balance &gt;= <span class="number">0</span> -&gt;</span><br><span class="line">            rootB.parent &lt;- rootA</span><br><span class="line">            <span class="keyword">if</span> balance = <span class="number">0</span> <span class="keyword">then</span> rootA.height &lt;- rootA.height + <span class="number">1</span></span><br><span class="line">        | _ -&gt; rootA.parent &lt;- rootB</span><br><span class="line">    | _ -&gt; ()</span><br></pre></td></tr></table></figure>
 <h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>Now, we can implement the translation layer between <code>Tag</code> and <code>T</code>, most likely a class encapsulating a dictionary:</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Kotlin</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DisjointSet</span>&lt;<span class="type">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> map = mutableMapOf&lt;T, Tag&gt;()</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// F#</span></span><br><span class="line"><span class="class"><span class="keyword">type</span> <span class="title">DisjointSet</span>&lt;<span class="title">'T</span> when <span class="title">'T</span> : equality&gt;</span>() =</span><br><span class="line">    <span class="keyword">let</span> map = Dictionary&lt;<span class="symbol">'T</span>, Tag&gt;()</span><br><span class="line">    <span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// F#</span></span><br><span class="line"><span class="class"><span class="keyword">type</span> <span class="title">DisjointSet</span>&lt;'T when 'T : equality&gt;</span>() =</span><br><span class="line">    <span class="keyword">let</span> map = Dictionary&lt;<span class="symbol">'T</span>, Tag&gt;()</span><br><span class="line">    <span class="comment">//...</span></span><br></pre></td></tr></table></figure>
 <h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><p>Find method, implemented before, makes sense only in a domain of <em>tags</em> which are not exposed outside this module/package. The value returned by <code>find</code> is also not really worth keeping as it may change all the time while sets are merged. What we want to expose though is the function which will test if two items are in the same set.</p>
 <p>There are two possible optimizations here:</p>
 <ul>
@@ -876,7 +876,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/30/Curious-case-of-disjoint-set/" data-id="cjfvr5r780000qsjbbx6lqwas" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/30/Curious-case-of-disjoint-set/" data-id="cjfvrga3r000198jbm25yh7ba" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/30/Curious-case-of-disjoint-set/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -992,7 +992,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/" data-id="cjfvr5r7v0008qsjbjidbv0jh" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/" data-id="cjfvrga46000898jbbga40pw8" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/26/Maze-generator-again-but-this-time-with-Scala-js/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1062,7 +1062,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" data-id="cjfvr5r96001sqsjb3hn2zjjv" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/" data-id="cjfvrga49000a98jbrrs7acpj" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/15/Shaking-maze-generator/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1217,7 +1217,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="cjfvr5r7t0007qsjbv68lk9mf" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/" data-id="cjfvrga45000798jbnzabkick" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/14/Maze-generator-with-Fable/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1283,7 +1283,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/" data-id="cjfvr5r94001pqsjb0oxm5eno" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/" data-id="cjfvrga4f000g98jbwj2kkbs5" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/#disqus_thread" class="article-comment-link">Comments</a>
       
