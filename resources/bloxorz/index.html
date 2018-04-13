@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <title>Simple Fable App</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body { margin: 0; width: 100%; position: relative; }
+    #canvas { background-color: black; height: 100vh; width: 100%; display: block; }
+    #buttons { position: fixed; bottom: 8px; right: 8px; }
+    #buttons button { padding: 8px; }
+  </style>
+
+  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=es6,fetch"></script>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="buttons">
+    <button id="load1">World 1</button>
+    <button id="load2">World 2</button>
+    <button id="start">Start</button>
+  </div>
+  <script src="bundle.js"></script>
+</body>
+</html>
