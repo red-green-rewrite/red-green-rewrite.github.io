@@ -11,10 +11,13 @@
 <meta property="og:url" content="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/index.html">
 <meta property="og:site_name" content="Red, Green, Rewrite">
 <meta property="og:description" content="I was doing some katas on CodeWars recently, and some of them were involving perfect square numbers. In short, perfect square number is an integer which square root is also an integer, like 9, 16, 25,">
-<meta property="og:updated_time" content="2017-03-16T13:18:14.660Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-05-17T15:44:09.000Z">
+<meta property="article:modified_time" content="2016-09-26T15:29:31.374Z">
+<meta property="article:author" content="Milosz Krajewski">
+<meta property="article:tag" content="kata">
+<meta property="article:tag" content="csharp">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A perfect square kata">
-<meta name="twitter:description" content="I was doing some katas on CodeWars recently, and some of them were involving perfect square numbers. In short, perfect square number is an integer which square root is also an integer, like 9, 16, 25,">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
   
@@ -24,7 +27,9 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   
 <!-- Google Analytics -->
 <script type="text/javascript">
@@ -40,7 +45,7 @@ ga('send', 'pageview');
 <!-- End Google Analytics -->
 
 
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body>
   <div id="container">
@@ -52,10 +57,6 @@ ga('send', 'pageview');
       <h1 id="logo-wrap">
         <a href="/" id="logo">Red, Green, Rewrite</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">the tales about software development</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -74,7 +75,7 @@ ga('send', 'pageview');
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
       </div>
     </div>
   </div>
@@ -102,44 +103,44 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>I was doing some katas on <a href="http://www.codewars.com/" target="_blank" rel="external">CodeWars</a> recently, and some of them were involving <a href="https://en.wikipedia.org/wiki/Square_number" target="_blank" rel="external">perfect square numbers</a>. In short, perfect square number is an integer which square root is also an integer, like 9, 16, 25, and 36.</p>
+        <p>I was doing some katas on <a href="http://www.codewars.com/" target="_blank" rel="noopener">CodeWars</a> recently, and some of them were involving <a href="https://en.wikipedia.org/wiki/Square_number" target="_blank" rel="noopener">perfect square numbers</a>. In short, perfect square number is an integer which square root is also an integer, like 9, 16, 25, and 36.</p>
 <p>Anyway, solutions which got most votes in both categories, <em>best practice</em> and <em>clever</em> use:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">IsPerfectSquare</span>(<span class="params"><span class="keyword">long</span> number</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> Math.Sqrt(number) % <span class="number">1</span> == <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">IsPerfectSquare</span>(<span class="params"><span class="keyword">long</span> number</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Math.Sqrt(number) % <span class="number">1</span> == <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>This is kind of clever, as .NET (surprisingly) does not provide <code>double Math.Frac(double)</code>, which would need to be implemented as:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">Frac</span>(<span class="params"><span class="keyword">double</span> number</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> number - Math.Floor(number);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Frac</span>(<span class="params"><span class="keyword">double</span> number</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> number - Math.Floor(number);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>But is it correct (best practice) at all?</strong></p>
 <p>Every time you see equals (<code>==</code>) used with floating point types the red light should go off in your head. Equality and floating point numbers do not work well together. Floating point numbers are usually greater (or equal) than (<code>&gt;</code> or <code>&gt;=</code>), less (or equal) than (<code>&lt;</code> or <code>&lt;=</code>), or within particular range (<code>Math.Abs(x - y) &lt;= Epsilon</code>), but they are rarely equal (<code>==</code>). At least you should not rely on that.</p>
 <p>Just try that:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sum = <span class="number">0.0</span>;</div><div class="line">Debug.Assert(sum == <span class="number">0.0</span>);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) sum += <span class="number">0.1</span>;</div><div class="line">Debug.Assert(sum == <span class="number">100</span>*<span class="number">0.1</span>); <span class="comment">// FAIL! 9.99999999999998 != 10</span></div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sum = <span class="number">0.0</span>;</span><br><span class="line">Debug.Assert(sum == <span class="number">0.0</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) sum += <span class="number">0.1</span>;</span><br><span class="line">Debug.Assert(sum == <span class="number">100</span>*<span class="number">0.1</span>); <span class="comment">// FAIL! 9.99999999999998 != 10</span></span><br></pre></td></tr></table></figure>
 <p>So I know that <em>clever</em> implementation of <code>IsPerfectSquare</code> is potentially flawed, but as a true wannabe skeptic, I also know that experiment beats theory. I decided to find what is the smallest <em>not so perfect square number</em> which will deceive this method and force it to provide <em>false positive</em>.<br>The best bet is a number which is <em>true perfect square plus 1</em>, so:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">IsPerfectSquare</span>(<span class="params"><span class="keyword">long</span> number</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> Math.Sqrt(number) % <span class="number">1</span> == <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">1</span>; i &lt; <span class="keyword">int</span>.MaxValue; i++) &#123;</div><div class="line">        <span class="keyword">var</span> fake = i*i + <span class="number">1</span>; <span class="comment">// fake perfect square</span></div><div class="line">        <span class="keyword">if</span> (IsPerfectSquare(fake)) &#123;</div><div class="line">            Console.WriteLine(<span class="string">"&#123;0&#125; is the smallest fake perfect square"</span>, fake);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">IsPerfectSquare</span>(<span class="params"><span class="keyword">long</span> number</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Math.Sqrt(number) % <span class="number">1</span> == <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">1</span>; i &lt; <span class="keyword">int</span>.MaxValue; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> fake = i*i + <span class="number">1</span>; <span class="comment">// fake perfect square</span></span><br><span class="line">        <span class="keyword">if</span> (IsPerfectSquare(fake)) &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">"&#123;0&#125; is the smallest fake perfect square"</span>, fake);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>…and we have an answer in below 3s:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">4503599627370497 is the smallest fake perfect square</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4503599627370497 is the smallest fake perfect square</span><br></pre></td></tr></table></figure>
 <p>which is <code>67108864^2 + 1</code>.</p>
 <p>How can we implement <code>IsPerfectSquare</code> properly then?</p>
-<p>For square roots in integer domain we should probably use <a href="http://stackoverflow.com/questions/1100090/looking-for-an-efficient-integer-square-root-algorithm-for-arm-thumb2" target="_blank" rel="external">dedicated algorithm</a> but because this is outside of the scope here (and outside the scope of this kata, I suppose) we need to think how to make <code>Math.Sqrt(...)</code> work for us.</p>
+<p>For square roots in integer domain we should probably use <a href="http://stackoverflow.com/questions/1100090/looking-for-an-efficient-integer-square-root-algorithm-for-arm-thumb2" target="_blank" rel="noopener">dedicated algorithm</a> but because this is outside of the scope here (and outside the scope of this kata, I suppose) we need to think how to make <code>Math.Sqrt(...)</code> work for us.</p>
 <p>We need to bring the equality test back to integer domain. So, even if we use floating point numbers to calculate square root, we will perform the test itself using integers.</p>
 <p>Let’s get the integer (rounded) “square root candidate” first:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> root = (<span class="keyword">long</span>)Math.Sqrt(number);</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> root = (<span class="keyword">long</span>)Math.Sqrt(number);</span><br></pre></td></tr></table></figure>
 <p>…and then test if it is really is a square root of given number:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> root*root == number;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> root*root == number;</span><br></pre></td></tr></table></figure>
 <p>That’s it. Not much more code. There was really no reason to sacrifice correctness for “cleverness”.</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">IsPerfectSquare</span>(<span class="params"><span class="keyword">long</span> number</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> root = (<span class="keyword">long</span>)Math.Sqrt(number);</div><div class="line">    <span class="keyword">return</span> root*root == number;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">IsPerfectSquare</span>(<span class="params"><span class="keyword">long</span> number</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> root = (<span class="keyword">long</span>)Math.Sqrt(number);</span><br><span class="line">    <span class="keyword">return</span> root*root == number;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>As a bonus we can also check if rounding might be a problem leading to <em>false negatives</em>:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> max = (<span class="keyword">long</span>)<span class="keyword">int</span>.MaxValue;</div><div class="line">Debug.Assert((<span class="keyword">long</span>)Math.Sqrt(max*max) == max); <span class="comment">// SUCCESS!</span></div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> max = (<span class="keyword">long</span>)<span class="keyword">int</span>.MaxValue;</span><br><span class="line">Debug.Assert((<span class="keyword">long</span>)Math.Sqrt(max*max) == max); <span class="comment">// SUCCESS!</span></span><br></pre></td></tr></table></figure>
 <p>…and it (most likely) won’t.<br>Of course, this approach will stop working at some point:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> number = <span class="keyword">new</span> BigInteger(<span class="keyword">long</span>.MaxValue);</div><div class="line"><span class="keyword">var</span> square = number*number;</div><div class="line"><span class="keyword">var</span> root = <span class="keyword">new</span> BigInteger(Math.Sqrt((<span class="keyword">double</span>)square));</div><div class="line">Debug.Assert(root == number); <span class="comment">// FAIL!</span></div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> number = <span class="keyword">new</span> BigInteger(<span class="keyword">long</span>.MaxValue);</span><br><span class="line"><span class="keyword">var</span> square = number*number;</span><br><span class="line"><span class="keyword">var</span> root = <span class="keyword">new</span> BigInteger(Math.Sqrt((<span class="keyword">double</span>)square));</span><br><span class="line">Debug.Assert(root == number); <span class="comment">// FAIL!</span></span><br></pre></td></tr></table></figure>
 <p>…but that’s different story.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/" data-id="cj0cp9w890003u0blpkvihk91" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/" data-id="ckth1tcnk0001a4jb8y3celc9" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/05/17/A-perfect-square-kata/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kata/">kata</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/" rel="tag">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kata/" rel="tag">kata</a></li></ul>
 
     </footer>
   </div>
@@ -165,7 +166,7 @@ ga('send', 'pageview');
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>
@@ -179,7 +180,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/functional/">functional</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin/">kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin-js/">kotlin.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maze/">maze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala-js/">scala.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/" rel="tag">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/" rel="tag">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/" rel="tag">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/" rel="tag">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/functional/" rel="tag">functional</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/" rel="tag">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin/" rel="tag">kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin-js/" rel="tag">kotlin.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maze/" rel="tag">maze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/" rel="tag">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala-js/" rel="tag">scala.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/" rel="tag">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
     </div>
   </div>
 
@@ -242,7 +243,7 @@ ga('send', 'pageview');
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 Milosz Krajewski<br>
+      &copy; 2021 Milosz Krajewski<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -274,11 +275,17 @@ ga('send', 'pageview');
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>

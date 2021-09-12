@@ -11,11 +11,13 @@
 <meta property="og:url" content="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/index.html">
 <meta property="og:site_name" content="Red, Green, Rewrite">
 <meta property="og:description" content="Originally, this blogpost was titled “Use apply and carry on”, but I guess naming the function apply after Kotlin (damn you, Kotlin!) wasn’t the most preferred option by the public. I did like apple |">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/visual_dishonesty.png">
-<meta property="og:updated_time" content="2017-03-16T13:18:14.763Z">
+<meta property="article:published_time" content="2016-09-14T17:47:16.000Z">
+<meta property="article:modified_time" content="2016-09-26T15:29:31.384Z">
+<meta property="article:author" content="Milosz Krajewski">
+<meta property="article:tag" content="fsharp">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Use tee and carry on">
-<meta name="twitter:description" content="Originally, this blogpost was titled “Use apply and carry on”, but I guess naming the function apply after Kotlin (damn you, Kotlin!) wasn’t the most preferred option by the public. I did like apple |">
 <meta name="twitter:image" content="http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/visual_dishonesty.png">
   
     <link rel="alternate" href="/atom.xml" title="Red, Green, Rewrite" type="application/atom+xml">
@@ -26,7 +28,9 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   
 <!-- Google Analytics -->
 <script type="text/javascript">
@@ -42,7 +46,7 @@ ga('send', 'pageview');
 <!-- End Google Analytics -->
 
 
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body>
   <div id="container">
@@ -54,10 +58,6 @@ ga('send', 'pageview');
       <h1 id="logo-wrap">
         <a href="/" id="logo">Red, Green, Rewrite</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">the tales about software development</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -76,7 +76,7 @@ ga('send', 'pageview');
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://red-green-rewrite.github.io"></form>
       </div>
     </div>
   </div>
@@ -104,42 +104,42 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Originally, this blogpost was titled “Use apply and carry on”, but I guess naming the function <code>apply</code> after <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/apply.html" target="_blank" rel="external">Kotlin</a> (damn you, Kotlin!) wasn’t the most preferred option by the public. I did like <code>apple |&gt; apply eat</code> semantics but if Scott Wlaschin says <code>apply</code> is a <a href="https://fsharpforfunandprofit.com/posts/elevated-world/#apply" target="_blank" rel="external">different thing</a> then it is a different thing. To be precise Scott’s is <code>apply: (a -&gt; b) -&gt; a -&gt; b</code> and mine <em>was</em> (emphasize on was) <code>apply: (a -&gt; unit) -&gt; a -&gt; a</code>. Apparently, the function which does whatever I wanted <code>apply</code> to do is called <code>tee</code> (<a href="https://fsharpforfunandprofit.com/posts/recipe-part2/" target="_blank" rel="external">after Unix command</a>) or <code>tap</code> (at least in <a href="https://ruby-doc.org/core-2.2.3/Object.html#method-i-tap" target="_blank" rel="external">Ruby</a> and <a href="http://ramdajs.com/docs/#tap" target="_blank" rel="external">Ramda.js</a>).</p>
+        <p>Originally, this blogpost was titled “Use apply and carry on”, but I guess naming the function <code>apply</code> after <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/apply.html" target="_blank" rel="noopener">Kotlin</a> (damn you, Kotlin!) wasn’t the most preferred option by the public. I did like <code>apple |&gt; apply eat</code> semantics but if Scott Wlaschin says <code>apply</code> is a <a href="https://fsharpforfunandprofit.com/posts/elevated-world/#apply" target="_blank" rel="noopener">different thing</a> then it is a different thing. To be precise Scott’s is <code>apply: (a -&gt; b) -&gt; a -&gt; b</code> and mine <em>was</em> (emphasize on was) <code>apply: (a -&gt; unit) -&gt; a -&gt; a</code>. Apparently, the function which does whatever I wanted <code>apply</code> to do is called <code>tee</code> (<a href="https://fsharpforfunandprofit.com/posts/recipe-part2/" target="_blank" rel="noopener">after Unix command</a>) or <code>tap</code> (at least in <a href="https://ruby-doc.org/core-2.2.3/Object.html#method-i-tap" target="_blank" rel="noopener">Ruby</a> and <a href="http://ramdajs.com/docs/#tap" target="_blank" rel="noopener">Ramda.js</a>).</p>
 <p>So I’ve edited it and replaced <code>apply</code> with <code>tee</code>, but essentially it is almost unchanged… Let’s go then.</p>
 <hr>
-<p>One of everyone’s favourite features of F# is pipe (<code>|&gt;</code>) operator. It allows to pipe output of one function as input to another function preserving <a href="http://theburningmonk.com/2014/12/being-visually-honest-with-f/" target="_blank" rel="external">visual honesty</a>. The general idea is that, in English, we read <em>left-to-right</em> and <em>top-down</em>. In C# (C, C++, Java, Pascal, Python) we read in all possible directions, most likely <em>top-down</em> for overall structure but <em>botton-up</em> and <em>right-to-left</em> for single statements.</p>
+<p>One of everyone’s favourite features of F# is pipe (<code>|&gt;</code>) operator. It allows to pipe output of one function as input to another function preserving <a href="http://theburningmonk.com/2014/12/being-visually-honest-with-f/" target="_blank" rel="noopener">visual honesty</a>. The general idea is that, in English, we read <em>left-to-right</em> and <em>top-down</em>. In C# (C, C++, Java, Pascal, Python) we read in all possible directions, most likely <em>top-down</em> for overall structure but <em>botton-up</em> and <em>right-to-left</em> for single statements.</p>
 <p><img src="http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/visual_dishonesty.png" alt="Visual honesty"></p>
 <p>For example:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> y = Math.Round(Math.Exp(Math.Sin(x*<span class="number">5.2</span> + <span class="number">7.1</span>)));</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> y = Math.Round(Math.Exp(Math.Sin(x*<span class="number">5.2</span> + <span class="number">7.1</span>)));</span><br></pre></td></tr></table></figure>
 <p>starts at the <em>right</em> end going <em>left-to-right</em> for a moment (<code>x*5.2 + 7.1</code>) but then turns <em>right-to-left</em> with <code>Math.Sin</code>, <code>Math.Exp</code> and finally <code>Math.Round</code> (in this order). In F# the pipe operator (<code>|&gt;</code>) allows to write code exactly in the same order as it is going to be executed:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> y = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin |&gt; Math.Exp |&gt; Math.Round</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> y = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin |&gt; Math.Exp |&gt; Math.Round</span><br></pre></td></tr></table></figure>
 <p>Around the world, many hours have been spent arranging function arguments (guilty!) to allow such seamless experience. But sometimes, the universe is against us. Let’s assume we would like to print out the value after <code>Math.Sin</code>. The conservative approach would be quite intrusive - we would need to break expression in half:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> temp = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin </div><div class="line">printf <span class="string">"%g"</span> temp</div><div class="line"><span class="keyword">let</span> y = temp |&gt; Math.Exp |&gt; Math.Round</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> temp = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin </span><br><span class="line">printf <span class="string">"%g"</span> temp</span><br><span class="line"><span class="keyword">let</span> y = temp |&gt; Math.Exp |&gt; Math.Round</span><br></pre></td></tr></table></figure>
 <p>Whoa! That is intrusive. </p>
 <p>But here comes the rescue. The <code>tee</code> function implemented as:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> tee func arg = func arg; arg</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> tee func arg = func arg; arg</span><br></pre></td></tr></table></figure>
 <p>The function itself is trivial, it takes a function and an argument, executes given function with given argument but then returns it, so the argument goes through the function: </p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> y = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin |&gt; tee (printf <span class="string">"%g"</span>) |&gt; Math.Exp |&gt; Math.Round</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> y = x*<span class="number">5.2</span> + <span class="number">7.1</span> |&gt; Math.Sin |&gt; tee (printf <span class="string">"%g"</span>) |&gt; Math.Exp |&gt; Math.Round</span><br></pre></td></tr></table></figure>
 <p>In the example above, the value passed between <code>Math.Sin</code> and <code>Math.Exp</code> has been redirected “for a moment” to <code>printf &quot;%g&quot;</code> without any temporary variables or breaking the flow.</p>
 <p>Recently I needed to shuffle an array. The algorithm I used shuffles array in place:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="keyword">inline</span> swapInPlace i j (array: <span class="symbol">'a</span>[]) = </div><div class="line">    <span class="keyword">let</span> t = array.[i]</div><div class="line">    array.[i] &lt;- array.[j]</div><div class="line">    array.[j] &lt;- t</div><div class="line"></div><div class="line"><span class="keyword">let</span> shuffleInPlace (array: <span class="symbol">'a</span>[]) =</div><div class="line">    <span class="keyword">for</span> i = array.Length - <span class="number">1</span> <span class="keyword">downto</span> <span class="number">1</span> <span class="keyword">do</span></div><div class="line">        array |&gt; swapInPlace i (Random.randomInt <span class="number">0</span> i)</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">inline</span> swapInPlace i j (array: <span class="symbol">'a</span>[]) = </span><br><span class="line">    <span class="keyword">let</span> t = array.[i]</span><br><span class="line">    array.[i] &lt;- array.[j]</span><br><span class="line">    array.[j] &lt;- t</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> shuffleInPlace (array: <span class="symbol">'a</span>[]) =</span><br><span class="line">    <span class="keyword">for</span> i = array.Length - <span class="number">1</span> <span class="keyword">downto</span> <span class="number">1</span> <span class="keyword">do</span></span><br><span class="line">        array |&gt; swapInPlace i (Random.randomInt <span class="number">0</span> i)</span><br></pre></td></tr></table></figure>
 <p>(<code>Random.randomInt</code> is not a standard function, but its implementation is irrelevant for this example)</p>
 <p>I needed it as pure function, which will not mutate input array, just return shuffled version of it. Let’s do it:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> shuffle array = </div><div class="line">    <span class="keyword">let</span> result = Array.copy array</div><div class="line">    shuffleInPlace result</div><div class="line">    result</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> shuffle array = </span><br><span class="line">    <span class="keyword">let</span> result = Array.copy array</span><br><span class="line">    shuffleInPlace result</span><br><span class="line">    result</span><br></pre></td></tr></table></figure>
 <p>Maybe we can do better with <code>tee</code>? Yes, we can:</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> shuffle array = array |&gt; Array.copy |&gt; tee shuffleInPlace</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> shuffle array = array |&gt; Array.copy |&gt; tee shuffleInPlace</span><br></pre></td></tr></table></figure>
 <p>Much better. </p>
 <p>So, <strong>use tee and carry on</strong>!</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/" data-id="cj0cp9w9w001pu0bl5dom2y57" class="article-share-link">Share</a>
+      <a data-url="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/" data-id="ckth1tcnw000fa4jbfney4bai" class="article-share-link">Share</a>
       
         <a href="http://red-green-rewrite.github.io/2016/09/14/Use-apply-and-carry-on/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fsharp/">fsharp</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fsharp/" rel="tag">fsharp</a></li></ul>
 
     </footer>
   </div>
@@ -170,7 +170,7 @@ ga('send', 'pageview');
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>
@@ -184,7 +184,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/functional/">functional</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin/">kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin-js/">kotlin.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maze/">maze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala-js/">scala.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/" rel="tag">csharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design/" rel="tag">design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fable/" rel="tag">fable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fsharp/" rel="tag">fsharp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/functional/" rel="tag">functional</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kata/" rel="tag">kata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin/" rel="tag">kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kotlin-js/" rel="tag">kotlin.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maze/" rel="tag">maze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/" rel="tag">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala-js/" rel="tag">scala.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/state-machine/" rel="tag">state-machine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
     </div>
   </div>
 
@@ -247,7 +247,7 @@ ga('send', 'pageview');
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 Milosz Krajewski<br>
+      &copy; 2021 Milosz Krajewski<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -279,11 +279,17 @@ ga('send', 'pageview');
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>
